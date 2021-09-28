@@ -20,9 +20,9 @@ public class MeuPrimeiroController {
     @GetMapping("/hello")
     @ResponseBody
     public String hello() {
-        Cliente joao = new Cliente("José", "zezin@abc.com", "9s999998888");
+        Cliente jose = new Cliente("José", "jose@abcde.com", "999998888");
 
-        ativacaoClienteService.ativar(joao);
+        ativacaoClienteService.ativar(jose);
 
         return "Hello!";
     }

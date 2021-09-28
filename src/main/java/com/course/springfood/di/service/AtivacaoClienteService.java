@@ -5,7 +5,6 @@ import com.course.springfood.di.notificacao.Notificador;
 import com.course.springfood.di.notificacao.NotificadorEmail;
 import org.springframework.stereotype.Component;
 
-@Component
 public class AtivacaoClienteService {
 
     private Notificador notificador;
