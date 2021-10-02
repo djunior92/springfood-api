@@ -1,9 +1,10 @@
 package com.course.springfood.di.notificacao;
 
 import com.course.springfood.di.modelo.Cliente;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-//@Primary
+@Qualifier("normal")
 @Component
 public class NotificadorEmail implements Notificador {
 
