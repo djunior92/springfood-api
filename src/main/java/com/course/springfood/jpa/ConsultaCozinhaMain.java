@@ -2,6 +2,7 @@ package com.course.springfood.jpa;
 
 import com.course.springfood.SpringfoodApiApplication;
 import com.course.springfood.domain.model.Cozinha;
+import com.course.springfood.domain.repository.CozinhaRepository;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
@@ -15,11 +16,11 @@ public class ConsultaCozinhaMain {
                 .web(WebApplicationType.NONE)
                 .run(args);
 
-        CadastroCozinha cadastroCozinha = applicationContext.getBean(CadastroCozinha.class);
+        CozinhaRepository cozinhaRepository = applicationContext.getBean(CozinhaRepository.class);
 
-        List<Cozinha> cozinhas = cadastroCozinha.listar();
+        List<Cozinha> todasCozinhas = cozinhaRepository.listar();
 
-        for (Cozinha cozinha : cozinhas) {
+        for (Cozinha cozinha : todasCozinhas) {
             System.out.println(cozinha.getNome());
         }
     }
