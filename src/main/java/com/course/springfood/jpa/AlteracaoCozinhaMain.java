@@ -2,6 +2,7 @@ package com.course.springfood.jpa;
 
 import com.course.springfood.SpringfoodApiApplication;
 import com.course.springfood.domain.model.Cozinha;
+import com.course.springfood.domain.repository.CozinhaRepository;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
@@ -13,13 +14,13 @@ public class AlteracaoCozinhaMain {
                 .web(WebApplicationType.NONE)
                 .run(args);
 
-        CadastroCozinha cadastroCozinha = applicationContext.getBean(CadastroCozinha.class);
+        CozinhaRepository cozinhaRepository = applicationContext.getBean(CozinhaRepository.class);
 
         Cozinha cozinha = new Cozinha();
         cozinha.setId(1L);
         cozinha.setNome("Brasileira");
 
-        cadastroCozinha.salvar(cozinha);
+        cozinhaRepository.salvar(cozinha);
 
     }
 
