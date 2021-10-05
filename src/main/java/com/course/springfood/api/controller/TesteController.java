@@ -4,7 +4,6 @@ import com.course.springfood.domain.model.Cozinha;
 import com.course.springfood.domain.model.Restaurante;
 import com.course.springfood.domain.repository.CozinhaRepository;
 import com.course.springfood.domain.repository.RestauranteRepository;
-import com.course.springfood.infrastructure.repository.spec.RestauranteSpecs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-
-import static com.course.springfood.infrastructure.repository.spec.RestauranteSpecs.*;
 
 @RestController
 @RequestMapping("/teste")
@@ -76,9 +73,7 @@ public class TesteController {
 
     @GetMapping("/restaurantes/com-frete-gratis")
     public List<Restaurante> restaurantesComFreteGratis(String nome) {
-
-        return restauranteRepository.findAll(comFreteGratis()
-                .and(comNomeSemelhante(nome)));
+        return restauranteRepository.findComFreteGratis(nome);
     }
 
 }
