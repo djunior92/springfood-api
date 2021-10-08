@@ -3,7 +3,6 @@ package com.course.springfood.infrastructure.repository;
 import com.course.springfood.domain.model.Restaurante;
 import com.course.springfood.domain.repository.RestauranteRepository;
 import com.course.springfood.domain.repository.RestauranteRepositoryQueries;
-import com.course.springfood.infrastructure.repository.spec.RestauranteSpecs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
@@ -16,7 +15,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.course.springfood.infrastructure.repository.spec.RestauranteSpecs.*;
+import static com.course.springfood.infrastructure.repository.spec.RestauranteSpecs.comFreteGratis;
+import static com.course.springfood.infrastructure.repository.spec.RestauranteSpecs.comNomeSemelhante;
 
 @Repository
 public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
@@ -24,8 +24,7 @@ public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
     @PersistenceContext
     private EntityManager manager;
 
-    @Autowired
-    @Lazy
+    @Autowired @Lazy
     private RestauranteRepository restauranteRepository;
 
     @Override
