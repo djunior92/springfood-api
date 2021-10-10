@@ -1,7 +1,5 @@
 package com.course.springfood.api.controller;
 
-import com.course.springfood.domain.exception.EntidadeEmUsoException;
-import com.course.springfood.domain.exception.EntidadeNaoEncontradaException;
 import com.course.springfood.domain.model.Cozinha;
 import com.course.springfood.domain.repository.CozinhaRepository;
 import com.course.springfood.domain.service.CadastroCozinhaService;
