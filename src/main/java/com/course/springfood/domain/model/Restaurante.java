@@ -1,7 +1,7 @@
 package com.course.springfood.domain.model;
 
 import com.course.springfood.core.validation.Groups;
-import com.course.springfood.core.validation.TaxaFrete;
+import com.course.springfood.core.validation.Multiplo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,6 +12,7 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import javax.validation.groups.ConvertGroup;
 import javax.validation.groups.Default;
 import java.math.BigDecimal;
@@ -34,8 +35,8 @@ public class Restaurante {
     private String nome;
 
     @NotNull
-//	@PositiveOrZero
-    @TaxaFrete
+    @PositiveOrZero
+    @Multiplo(numero = 5)
     @Column(name = "taxa_frete", nullable = false)
     private BigDecimal taxaFrete;
 
