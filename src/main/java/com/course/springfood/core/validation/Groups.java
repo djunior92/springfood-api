@@ -1,4 +1,4 @@
-package com.course.springfood;
+package com.course.springfood.core.validation;
 
 public interface Groups {
 

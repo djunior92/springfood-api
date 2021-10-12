@@ -1,6 +1,6 @@
 package com.course.springfood.domain.model;
 
-import com.course.springfood.Groups;
+import com.course.springfood.core.validation.Groups;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
