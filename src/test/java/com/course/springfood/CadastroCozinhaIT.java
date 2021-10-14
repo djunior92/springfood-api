@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class CadastroCozinhaIntegrationTests {
+public class CadastroCozinhaIT {
 
     @Autowired
     private CadastroCozinhaService cadastroCozinha;
@@ -25,8 +25,6 @@ public class CadastroCozinhaIntegrationTests {
     public void deveAtribuirId_QuandoCadastrarCozinhaComDadosCorretos() {
         Cozinha novaCozinha = new Cozinha();
         novaCozinha.setNome("Chinesa");
-
-        novaCozinha = cadastroCozinha.salvar(novaCozinha);
 
         assertThat(novaCozinha).isNotNull();
         assertThat(novaCozinha.getId()).isNotNull();
