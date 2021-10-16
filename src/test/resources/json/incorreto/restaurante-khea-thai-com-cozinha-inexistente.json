@@ -1,0 +1,7 @@
+{
+  "nome": "Khea Thai",
+  "taxaFrete": 12,
+  "cozinha": {
+    "id": 999
+  }
+}
