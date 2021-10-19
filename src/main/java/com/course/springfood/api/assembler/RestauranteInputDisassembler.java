@@ -3,22 +3,26 @@ package com.course.springfood.api.assembler;
 import com.course.springfood.api.model.input.RestauranteInput;
 import com.course.springfood.domain.model.Cozinha;
 import com.course.springfood.domain.model.Restaurante;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class RestauranteInputDisassembler {
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     public Restaurante toDomainObject(RestauranteInput restauranteInput) {
-        Restaurante restaurante = new Restaurante();
-        restaurante.setNome(restauranteInput.getNome());
-        restaurante.setTaxaFrete(restauranteInput.getTaxaFrete());
+        return modelMapper.map(restauranteInput, Restaurante.class);
+    }
 
-        Cozinha cozinha = new Cozinha();
-        cozinha.setId(restauranteInput.getCozinha().getId());
+    public void copyToDomainObject(RestauranteInput restauranteInput, Restaurante restaurante) {
+        // Para evitar org.hibernate.HibernateException: identifier of an instance of
+        // com.course.springfood.domain.model.Cozinha was altered from 1 to 2
+        restaurante.setCozinha(new Cozinha());
 
-        restaurante.setCozinha(cozinha);
-
-        return restaurante;
+        modelMapper.map(restauranteInput, restaurante);
     }
 
 }
