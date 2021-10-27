@@ -1,6 +1,7 @@
 package com.course.springfood.api.assembler;
 
 import com.course.springfood.api.model.input.RestauranteInput;
+import com.course.springfood.domain.model.Cidade;
 import com.course.springfood.domain.model.Cozinha;
 import com.course.springfood.domain.model.Restaurante;
 import org.modelmapper.ModelMapper;
@@ -21,6 +22,10 @@ public class RestauranteInputDisassembler {
         // Para evitar org.hibernate.HibernateException: identifier of an instance of
         // com.course.springfood.domain.model.Cozinha was altered from 1 to 2
         restaurante.setCozinha(new Cozinha());
+
+        if (restaurante.getEndereco() != null) {
+            restaurante.getEndereco().setCidade(new Cidade());
+        }
 
         modelMapper.map(restauranteInput, restaurante);
     }

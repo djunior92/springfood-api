@@ -1,8 +1,12 @@
 package com.course.springfood;
 
+import com.course.springfood.domain.model.Cidade;
 import com.course.springfood.domain.model.Cozinha;
+import com.course.springfood.domain.model.Estado;
 import com.course.springfood.domain.model.Restaurante;
+import com.course.springfood.domain.repository.CidadeRepository;
 import com.course.springfood.domain.repository.CozinhaRepository;
+import com.course.springfood.domain.repository.EstadoRepository;
 import com.course.springfood.domain.repository.RestauranteRepository;
 import com.course.springfood.util.DatabaseCleaner;
 import com.course.springfood.util.ResourceUtils;
@@ -43,6 +47,12 @@ public class CadastroRestauranteIT {
 
     @Autowired
     private CozinhaRepository cozinhaRepository;
+
+    @Autowired
+    private CidadeRepository cidadeRepository;
+
+    @Autowired
+    private EstadoRepository estadoRepository;
 
     @Autowired
     private RestauranteRepository restauranteRepository;
@@ -162,6 +172,17 @@ public class CadastroRestauranteIT {
     }
 
     private void prepararDados() {
+        Estado estadoSaoPaulo= new Estado();
+        estadoSaoPaulo.setId(1L);
+        estadoSaoPaulo.setNome("São Paulo");
+        estadoRepository.save(estadoSaoPaulo);
+
+        Cidade cidadeSaoPaulo= new Cidade();
+        cidadeSaoPaulo.setId(1L);
+        cidadeSaoPaulo.setNome("São Paulo");
+        cidadeSaoPaulo.setEstado(estadoSaoPaulo);
+        cidadeRepository.save(cidadeSaoPaulo);
+
         Cozinha cozinhaJaponesa= new Cozinha();
         cozinhaJaponesa.setNome("Japonesa");
         cozinhaRepository.save(cozinhaJaponesa);
