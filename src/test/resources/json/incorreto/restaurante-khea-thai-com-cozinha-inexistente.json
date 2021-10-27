@@ -3,5 +3,15 @@
   "taxaFrete": 12,
   "cozinha": {
     "id": 999
+  },
+  "endereco": {
+    "cep": "15800-000",
+    "logradouro": "Rua Brasil",
+    "numero": "1000",
+    "complemento": null,
+    "bairro": "Centro",
+    "cidade": {
+      "id": 1
+    }
   }
 }

@@ -1,6 +1,7 @@
 package com.course.springfood.domain.service;
 
 import com.course.springfood.domain.exception.RestauranteNaoEncontradoException;
+import com.course.springfood.domain.model.Cidade;
 import com.course.springfood.domain.model.Cozinha;
 import com.course.springfood.domain.model.Restaurante;
 import com.course.springfood.domain.repository.RestauranteRepository;
@@ -17,13 +18,19 @@ public class CadastroRestauranteService {
     @Autowired
     private CadastroCozinhaService cadastroCozinha;
 
+    @Autowired
+    private CadastroCidadeService cadastroCidade;
+
     @Transactional
     public Restaurante salvar(Restaurante restaurante) {
         Long cozinhaId = restaurante.getCozinha().getId();
+        Long cidadeId = restaurante.getEndereco().getCidade().getId();
 
         Cozinha cozinha = cadastroCozinha.buscarOuFalhar(cozinhaId);
+        Cidade cidade = cadastroCidade.buscarOuFalhar(cidadeId);
 
         restaurante.setCozinha(cozinha);
+        restaurante.getEndereco().setCidade(cidade);
 
         return restauranteRepository.save(restaurante);
     }

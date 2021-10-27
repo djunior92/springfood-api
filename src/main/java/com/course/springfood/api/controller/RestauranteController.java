@@ -4,6 +4,7 @@ import com.course.springfood.api.assembler.RestauranteInputDisassembler;
 import com.course.springfood.api.assembler.RestauranteModelAssembler;
 import com.course.springfood.api.model.RestauranteModel;
 import com.course.springfood.api.model.input.RestauranteInput;
+import com.course.springfood.domain.exception.CidadeNaoEncontradaException;
 import com.course.springfood.domain.exception.CozinhaNaoEncontradaException;
 import com.course.springfood.domain.exception.NegocioException;
 import com.course.springfood.domain.model.Restaurante;
@@ -51,7 +52,7 @@ public class RestauranteController {
             Restaurante restaurante = restauranteInputDisassembler.toDomainObject(restauranteInput);
 
             return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restaurante));
-        } catch (CozinhaNaoEncontradaException e) {
+        } catch (CozinhaNaoEncontradaException | CidadeNaoEncontradaException e) {
             throw new NegocioException(e.getMessage());
         }
     }
@@ -65,7 +66,7 @@ public class RestauranteController {
             restauranteInputDisassembler.copyToDomainObject(restauranteInput, restauranteAtual);
 
             return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restauranteAtual));
-        } catch (CozinhaNaoEncontradaException e) {
+        } catch (CozinhaNaoEncontradaException | CidadeNaoEncontradaException e) {
             throw new NegocioException(e.getMessage());
         }
     }
