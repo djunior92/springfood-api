@@ -65,3 +65,11 @@ insert into produto (nome, descricao, preco, ativo, restaurante_id) values ('Bif
 insert into produto (nome, descricao, preco, ativo, restaurante_id) values ('Choripán', 'Pão com linguiça', 89, 1, 4);
 insert into produto (nome, descricao, preco, ativo, restaurante_id) values ('Espetinho', 'Acompanha farinha', 8, 1, 6);
 insert into produto (nome, descricao, preco, ativo, restaurante_id) values ('X-Bacon', 'Sandubão com muito queijo, hamburger bovino, bacon, ovo, salada e maionese', 19, 1, 5);
+
+insert into grupo (nome) values ('Gerente'), ('Vendedor'), ('Secretária'), ('Cadastrador');
+
+insert into usuario (id, nome, email, senha, data_cadastro) values
+(1, 'João da Silva', 'joao@springfood.com', '123', utc_timestamp),
+(2, 'Maria Alves', 'maria@springfood.com', '123', utc_timestamp),
+(3, 'José Marcos', 'jose@springfood.com', '123', utc_timestamp),
+(4, 'Luana Marques', 'luana@springfood.com', '123', utc_timestamp);
