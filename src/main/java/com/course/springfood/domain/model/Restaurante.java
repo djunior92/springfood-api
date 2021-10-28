@@ -9,7 +9,9 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -36,6 +38,8 @@ public class Restaurante {
 
     private Boolean ativo = Boolean.TRUE;
 
+    private Boolean aberto = Boolean.FALSE;
+
     @CreationTimestamp
     @Column(nullable = false, columnDefinition = "datetime")
     private OffsetDateTime dataCadastro;
@@ -48,7 +52,13 @@ public class Restaurante {
     @JoinTable(name = "restaurante_forma_pagamento",
             joinColumns = @JoinColumn(name = "restaurante_id"),
             inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
-    private List<FormaPagamento> formasPagamento = new ArrayList<>();
+    private Set<FormaPagamento> formasPagamento = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "restaurante_usuario_responsavel",
+            joinColumns = @JoinColumn(name = "restaurante_id"),
+            inverseJoinColumns = @JoinColumn(name = "usuario_id"))
+    private Set<Usuario> responsaveis = new HashSet<>();
 
     @OneToMany(mappedBy = "restaurante")
     private List<Produto> produtos = new ArrayList<>();
@@ -59,6 +69,30 @@ public class Restaurante {
 
     public void inativar() {
         setAtivo(false);
+    }
+
+    public void abrir() {
+        setAberto(true);
+    }
+
+    public void fechar() {
+        setAberto(false);
+    }
+
+    public boolean removerFormaPagamento(FormaPagamento formaPagamento) {
+        return getFormasPagamento().remove(formaPagamento);
+    }
+
+    public boolean adicionarFormaPagamento(FormaPagamento formaPagamento) {
+        return getFormasPagamento().add(formaPagamento);
+    }
+
+    public boolean removerResponsavel(Usuario usuario) {
+        return getResponsaveis().remove(usuario);
+    }
+
+    public boolean adicionarResponsavel(Usuario usuario) {
+        return getResponsaveis().add(usuario);
     }
 
 }

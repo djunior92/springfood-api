@@ -10,6 +10,7 @@ delete from permissao;
 delete from produto;
 delete from restaurante;
 delete from restaurante_forma_pagamento;
+delete from restaurante_usuario_responsavel;
 delete from usuario;
 delete from usuario_grupo;
 
@@ -40,12 +41,12 @@ insert into cidade (id, nome, estado_id) values (3, 'São Paulo', 2);
 insert into cidade (id, nome, estado_id) values (4, 'Campinas', 2);
 insert into cidade (id, nome, estado_id) values (5, 'Fortaleza', 3);
 
-insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro) values (1, 'Gourmet', 10, 1, utc_timestamp, utc_timestamp, true, 1, '38400-999', 'Rua João Pinheiro', '1000', 'Centro');
-insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo) values (2, 'Delivery', 9.50, 1, utc_timestamp, utc_timestamp, true);
-insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo) values (3, 'Comida Indiana', 15, 2, utc_timestamp, utc_timestamp, true);
-insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo) values (4, 'Steakhouse', 12, 3, utc_timestamp, utc_timestamp, true);
-insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo) values (5, 'Lanchonete do Seu Zé', 11, 4, utc_timestamp, utc_timestamp, true);
-insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo) values (6, 'Bar da Margarida', 6, 4, utc_timestamp, utc_timestamp, true);
+insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo, aberto, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro) values (1, 'Gourmet', 10, 1, utc_timestamp, utc_timestamp, true, true, 1, '38400-999', 'Rua João Pinheiro', '1000', 'Centro');
+insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo, aberto) values (2, 'Delivery', 9.50, 1, utc_timestamp, utc_timestamp, true, true);
+insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo, aberto) values (3, 'Comida Indiana', 15, 2, utc_timestamp, utc_timestamp, true, true);
+insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo, aberto) values (4, 'Steakhouse', 12, 3, utc_timestamp, utc_timestamp, true, true);
+insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo, aberto) values (5, 'Lanchonete do Seu Zé', 11, 4, utc_timestamp, utc_timestamp, true, true);
+insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo, aberto) values (6, 'Bar da Margarida', 6, 4, utc_timestamp, utc_timestamp, true, true);
 
 insert into forma_pagamento (id, descricao) values (1, 'Cartão de crédito');
 insert into forma_pagamento (id, descricao) values (2, 'Cartão de débito');
@@ -66,10 +67,17 @@ insert into produto (nome, descricao, preco, ativo, restaurante_id) values ('Cho
 insert into produto (nome, descricao, preco, ativo, restaurante_id) values ('Espetinho', 'Acompanha farinha', 8, 1, 6);
 insert into produto (nome, descricao, preco, ativo, restaurante_id) values ('X-Bacon', 'Sandubão com muito queijo, hamburger bovino, bacon, ovo, salada e maionese', 19, 1, 5);
 
-insert into grupo (nome) values ('Gerente'), ('Vendedor'), ('Secretária'), ('Cadastrador');
+insert into grupo (id, nome) values (1, 'Gerente'), (2, 'Vendedor'), (3, 'Secretária'), (4, 'Cadastrador');
 
 insert into usuario (id, nome, email, senha, data_cadastro) values
 (1, 'João da Silva', 'joao@springfood.com', '123', utc_timestamp),
 (2, 'Maria Alves', 'maria@springfood.com', '123', utc_timestamp),
 (3, 'José Marcos', 'jose@springfood.com', '123', utc_timestamp),
-(4, 'Luana Marques', 'luana@springfood.com', '123', utc_timestamp);
+(4, 'Luana Marques', 'luana@springfood.com', '123', utc_timestamp),
+(5, 'Marcos Garcia', 'marcos@springfood.com', '123', utc_timestamp);
+
+insert into grupo_permissao (grupo_id, permissao_id) values (1, 1), (1, 2), (2, 1), (2, 2), (3, 1);
+
+insert into usuario_grupo (usuario_id, grupo_id) values (1, 1), (1, 2), (2, 2);
+
+insert into restaurante_usuario_responsavel (restaurante_id, usuario_id) values (1, 5), (3, 5);
