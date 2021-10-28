@@ -7,6 +7,7 @@ import com.course.springfood.api.model.input.RestauranteInput;
 import com.course.springfood.domain.exception.CidadeNaoEncontradaException;
 import com.course.springfood.domain.exception.CozinhaNaoEncontradaException;
 import com.course.springfood.domain.exception.NegocioException;
+import com.course.springfood.domain.exception.RestauranteNaoEncontradoException;
 import com.course.springfood.domain.model.Restaurante;
 import com.course.springfood.domain.repository.RestauranteRepository;
 import com.course.springfood.domain.service.CadastroRestauranteService;
@@ -81,6 +82,26 @@ public class RestauranteController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void inativar(@PathVariable Long restauranteId) {
         cadastroRestaurante.inativar(restauranteId);
+    }
+
+    @PutMapping("/ativacoes")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void ativarMultiplos(@RequestBody List<Long> restauranteIds) {
+        try {
+            cadastroRestaurante.ativar(restauranteIds);
+        } catch (RestauranteNaoEncontradoException e) {
+            throw new NegocioException(e.getMessage(), e);
+        }
+    }
+
+    @DeleteMapping("/ativacoes")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void inativarMultiplos(@RequestBody List<Long> restauranteIds) {
+        try {
+            cadastroRestaurante.inativar(restauranteIds);
+        } catch (RestauranteNaoEncontradoException e) {
+            throw new NegocioException(e.getMessage(), e);
+        }
     }
 
     @PutMapping("/{restauranteId}/abertura")
