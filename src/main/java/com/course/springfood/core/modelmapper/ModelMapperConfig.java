@@ -1,7 +1,9 @@
 package com.course.springfood.core.modelmapper;
 
 import com.course.springfood.api.model.EnderecoModel;
+import com.course.springfood.api.model.input.ItemPedidoInput;
 import com.course.springfood.domain.model.Endereco;
+import com.course.springfood.domain.model.ItemPedido;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +17,9 @@ public class ModelMapperConfig {
 
 //		modelMapper.createTypeMap(Restaurante.class, RestauranteModel.class)
 //			.addMapping(Restaurante::getTaxaFrete, RestauranteModel::setPrecoFrete);
+
+        modelMapper.createTypeMap(ItemPedidoInput.class, ItemPedido.class)
+                .addMappings(mapper -> mapper.skip(ItemPedido::setId));
 
         var enderecoToEnderecoModelTypeMap = modelMapper.createTypeMap(
                 Endereco.class, EnderecoModel.class);
