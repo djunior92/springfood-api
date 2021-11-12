@@ -86,8 +86,8 @@ insert into usuario_grupo (usuario_id, grupo_id) values (1, 1), (1, 2), (2, 2);
 
 insert into restaurante_usuario_responsavel (restaurante_id, usuario_id) values (1, 5), (3, 5);
 
-insert into pedido (id, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro, status, data_criacao, subtotal, taxa_frete, valor_total)
-values (1, 1, 1, 1, 1, '15800-000', 'Rua Campinas', '100', '', 'Brasil', 'CRIADO', utc_timestamp, 298.90, 10, 308.90);
+insert into pedido (id, codigo, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro, status, data_criacao, subtotal, taxa_frete, valor_total)
+values (1, '47387b24-a26d-46e6-b56e-92a098cbd66f', 1, 1, 1, 1, '15800-000', 'Rua Campinas', '100', '', 'Brasil', 'CRIADO', utc_timestamp, 298.90, 10, 308.90);
 
 insert into item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
 values (1, 1, 1, 1, 78.9, 78.9, null);
@@ -95,8 +95,8 @@ values (1, 1, 1, 1, 78.9, 78.9, null);
 insert into item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
 values (2, 1, 2, 2, 110, 220, 'Sem sal por favor');
 
-insert into pedido (id, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro, status, data_criacao, subtotal, taxa_frete, valor_total)
-values (2, 4, 1, 2, 1, '15804-100', 'Rua Maranhão', '50', 'apto. 100', 'Centro', 'CRIADO', utc_timestamp, 79, 0, 79);
+insert into pedido (id, codigo, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro, status, data_criacao, subtotal, taxa_frete, valor_total)
+values (2, '5332cd76-9716-4f60-b1dd-074832705ff6', 4, 1, 2, 1, '15804-100', 'Rua Maranhão', '50', 'apto. 100', 'Centro', 'CRIADO', utc_timestamp, 79, 0, 79);
 
 insert into item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
 values (3, 2, 6, 1, 79, 79, 'Ao ponto');
