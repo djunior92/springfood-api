@@ -1,4 +1,4 @@
-package com.course.springfood.infrastructure.service;
+package com.course.springfood.infrastructure.service.query;
 
 import com.course.springfood.domain.filter.VendaDiariaFilter;
 import com.course.springfood.domain.model.Pedido;

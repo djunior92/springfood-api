@@ -71,7 +71,7 @@ public class CadastroCozinhaIT {
                 .when()
                 .get()
                 .then()
-                .body("", hasSize(quantidadeCozinhasCadastradas));
+                .body("content", hasSize(quantidadeCozinhasCadastradas));
     }
 
     @Test
