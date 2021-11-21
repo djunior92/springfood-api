@@ -11,7 +11,9 @@ import com.course.springfood.domain.exception.NegocioException;
 import com.course.springfood.domain.model.Pedido;
 import com.course.springfood.domain.model.Usuario;
 import com.course.springfood.domain.repository.PedidoRepository;
+import com.course.springfood.domain.repository.filter.PedidoFilter;
 import com.course.springfood.domain.service.EmissaoPedidoService;
+import com.course.springfood.infrastructure.repository.spec.PedidoSpecs;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import org.apache.commons.lang3.StringUtils;
@@ -42,12 +44,12 @@ public class PedidoController {
     @Autowired
     private PedidoInputDisassembler pedidoInputDisassembler;
 
-	@GetMapping
-	public List<PedidoResumoModel> listar() {
-		List<Pedido> todosPedidos = pedidoRepository.findAll();
+    @GetMapping
+    public List<PedidoResumoModel> pesquisar(PedidoFilter filtro) {
+        List<Pedido> todosPedidos = pedidoRepository.findAll(PedidoSpecs.usandoFiltro(filtro));
 
-		return pedidoResumoModelAssembler.toCollectionModel(todosPedidos);
-	}
+        return pedidoResumoModelAssembler.toCollectionModel(todosPedidos);
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

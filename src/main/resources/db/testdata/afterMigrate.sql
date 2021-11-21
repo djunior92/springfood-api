@@ -100,3 +100,21 @@ values (2, '5332cd76-9716-4f60-b1dd-074832705ff6', 4, 1, 2, 1, '15804-100', 'Rua
 
 insert into item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
 values (3, 2, 6, 1, 79, 79, 'Ao ponto');
+
+insert into pedido (id, codigo, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro, status, data_criacao, data_confirmacao, data_entrega, subtotal, taxa_frete, valor_total)
+values (3, '15b82c4c-4a8b-11ec-81d3-0242ac130003', 1, 1, 1, 1, '15802-222', 'Rua Pernambuco', '10', null, 'Brasil', 'ENTREGUE', '2021-09-25 09:00:00', '2021-09-25 09:02:05', '2021-09-27 10:53:40', 110, 10, 120);
+
+insert into item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values (4, 3, 2, 1, 110, 110, null);
+
+insert into pedido (id, codigo, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro, status, data_criacao, subtotal, taxa_frete, valor_total)
+values (4, '1ecf7e2a-4a8b-11ec-81d3-0242ac130003', 1, 2, 1, 1, '15741-800', 'Rua Santos', '50', 'Apto 100', 'Centro', 'CRIADO', utc_timestamp, 181, 5, 186);
+
+insert into item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values (5, 4, 3, 2, 90.5, 181, null);
+
+insert into pedido (id, codigo, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro, status, data_criacao, data_confirmacao, data_entrega, subtotal, taxa_frete, valor_total)
+values (5, '331ed7fe-4a8b-11ec-81d3-0242ac130003', 1, 3, 2, 1, '15800-000', 'Rua XV de Novembro', '90', 'Casa', 'Martins', 'ENTREGUE', '2021-11-20 21:00:00', '2021-11-20 21:01:30', '2021-11-25 12:00:42', 90.5, 10, 100.5);
+
+insert into item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values (6, 5, 3, 1, 90.5, 90.5, null);
