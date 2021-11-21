@@ -1,4 +1,4 @@
-package com.course.springfood.domain.repository.filter;
+package com.course.springfood.domain.filter;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,9 +8,8 @@ import java.time.OffsetDateTime;
 
 @Setter
 @Getter
-public class PedidoFilter {
+public class VendaDiariaFilter {
 
-    private Long clienteId;
     private Long restauranteId;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)

@@ -1,7 +1,7 @@
 package com.course.springfood.infrastructure.repository.spec;
 
 import com.course.springfood.domain.model.Pedido;
-import com.course.springfood.domain.repository.filter.PedidoFilter;
+import com.course.springfood.domain.filter.PedidoFilter;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.Predicate;

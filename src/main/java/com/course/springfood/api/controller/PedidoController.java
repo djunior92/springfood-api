@@ -12,7 +12,7 @@ import com.course.springfood.domain.exception.NegocioException;
 import com.course.springfood.domain.model.Pedido;
 import com.course.springfood.domain.model.Usuario;
 import com.course.springfood.domain.repository.PedidoRepository;
-import com.course.springfood.domain.repository.filter.PedidoFilter;
+import com.course.springfood.domain.filter.PedidoFilter;
 import com.course.springfood.domain.service.EmissaoPedidoService;
 import com.course.springfood.infrastructure.repository.spec.PedidoSpecs;
 import com.google.common.collect.ImmutableMap;
