@@ -6,7 +6,6 @@ import com.course.springfood.domain.model.StatusPedido;
 import com.course.springfood.domain.model.VendaDiaria;
 import com.course.springfood.domain.service.VendaQueryService;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.Predicate;
