@@ -3,10 +3,11 @@ package com.course.springfood.api.exceptionhandler;
 import com.course.springfood.domain.exception.EntidadeEmUsoException;
 import com.course.springfood.domain.exception.EntidadeNaoEncontradaException;
 import com.course.springfood.domain.exception.NegocioException;
-import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonMappingException.Reference;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -18,11 +19,13 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -39,6 +42,35 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Autowired
     private MessageSource messageSource;
+
+    @Override
+    protected ResponseEntity<Object> handleHttpMediaTypeNotAcceptable(HttpMediaTypeNotAcceptableException ex,
+                                                                      HttpHeaders headers, HttpStatus status, WebRequest request) {
+        return ResponseEntity.status(status).headers(headers).build();
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<Object> handleMaxUploadFileSizeExceeded(
+            MaxUploadSizeExceededException ex, WebRequest request) {
+
+        HttpStatus status = HttpStatus.PAYLOAD_TOO_LARGE;
+        ProblemType problemType = ProblemType.MAX_FILE_SIZE_EXCEEDED;
+        String detail = ex.getMessage();
+        String userMessage = "O arquivo que você está tentando enviar excede o tamanho máximo permitido";
+
+        if (ex.getRootCause() instanceof FileUploadBase.FileSizeLimitExceededException) {
+            var specEx = (FileUploadBase.FileSizeLimitExceededException) ex.getRootCause();
+            detail = specEx.getMessage();
+            userMessage = String.format("O arquivo que você está tentando enviar excede o tamanho máximo permitido de% d bytes",
+                    specEx.getPermittedSize());
+        }
+
+        Problem problem = createProblemBuilder(status, problemType, detail)
+                .userMessage(userMessage)
+                .build();
+
+        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+    }
 
     @Override
     protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers, HttpStatus status,
@@ -274,7 +306,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                 .detail(detail);
     }
 
-    private String joinPath(List<JsonMappingException.Reference> references) {
+    private String joinPath(List<Reference> references) {
         return references.stream()
                 .map(ref -> ref.getFieldName())
                 .collect(Collectors.joining("."));
