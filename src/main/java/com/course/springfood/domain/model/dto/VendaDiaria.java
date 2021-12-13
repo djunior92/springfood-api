@@ -1,4 +1,4 @@
-package com.course.springfood.domain.model;
+package com.course.springfood.domain.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,38 +1,30 @@
 package com.course.springfood.api.controller;
 
-import java.time.OffsetDateTime;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.CacheControl;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.ServletWebRequest;
-import org.springframework.web.filter.ShallowEtagHeaderFilter;
-
 import com.course.springfood.api.assembler.FormaPagamentoInputDisassembler;
 import com.course.springfood.api.assembler.FormaPagamentoModelAssembler;
 import com.course.springfood.api.model.FormaPagamentoModel;
 import com.course.springfood.api.model.input.FormaPagamentoInput;
+import com.course.springfood.api.openapi.controller.FormaPagamentoControllerOpenApi;
 import com.course.springfood.domain.model.FormaPagamento;
 import com.course.springfood.domain.repository.FormaPagamentoRepository;
 import com.course.springfood.domain.service.CadastroFormaPagamentoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.ServletWebRequest;
+import org.springframework.web.filter.ShallowEtagHeaderFilter;
+
+import javax.validation.Valid;
+import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/formas-pagamento")
-public class FormaPagamentoController {
+public class FormaPagamentoController implements FormaPagamentoControllerOpenApi {
 
     @Autowired
     private FormaPagamentoRepository formaPagamentoRepository;
@@ -46,7 +38,8 @@ public class FormaPagamentoController {
     @Autowired
     private FormaPagamentoInputDisassembler formaPagamentoInputDisassembler;
 
-    @GetMapping
+    @Override
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<FormaPagamentoModel>> listar(ServletWebRequest request) {
         ShallowEtagHeaderFilter.disableContentCaching(request.getRequest());
 
@@ -58,9 +51,6 @@ public class FormaPagamentoController {
             eTag = String.valueOf(dataUltimaAtualizacao.toEpochSecond());
         }
 
-        //Condição para verificar se houve alteração na informação em cache.
-        //Caso não tenha (o hash não foi alterado) então não há necessidade de continuar
-        //com o método, pois a informação já existente em cache será utilizada.
         if (request.checkNotModified(eTag)) {
             return null;
         }
@@ -76,7 +66,8 @@ public class FormaPagamentoController {
                 .body(formasPagamentosModel);
     }
 
-    @GetMapping("/{formaPagamentoId}")
+    @Override
+    @GetMapping(value = "/{formaPagamentoId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<FormaPagamentoModel> buscar(@PathVariable Long formaPagamentoId,
                                                       ServletWebRequest request) {
 
@@ -91,9 +82,6 @@ public class FormaPagamentoController {
             eTag = String.valueOf(dataAtualizacao.toEpochSecond());
         }
 
-        //Condição para verificar se houve alteração na informação em cache.
-        //Caso não tenha (o hash não foi alterado) então não há necessidade de continuar
-        //com o método, pois a informação já existente em cache será utilizada.
         if (request.checkNotModified(eTag)) {
             return null;
         }
@@ -108,7 +96,8 @@ public class FormaPagamentoController {
                 .body(formaPagamentoModel);
     }
 
-    @PostMapping
+    @Override
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public FormaPagamentoModel adicionar(@RequestBody @Valid FormaPagamentoInput formaPagamentoInput) {
         FormaPagamento formaPagamento = formaPagamentoInputDisassembler.toDomainObject(formaPagamentoInput);
@@ -118,7 +107,7 @@ public class FormaPagamentoController {
         return formaPagamentoModelAssembler.toModel(formaPagamento);
     }
 
-    @PutMapping("/{formaPagamentoId}")
+    @PutMapping(value = "/{formaPagamentoId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public FormaPagamentoModel atualizar(@PathVariable Long formaPagamentoId,
                                          @RequestBody @Valid FormaPagamentoInput formaPagamentoInput) {
         FormaPagamento formaPagamentoAtual = cadastroFormaPagamento.buscarOuFalhar(formaPagamentoId);
@@ -130,7 +119,8 @@ public class FormaPagamentoController {
         return formaPagamentoModelAssembler.toModel(formaPagamentoAtual);
     }
 
-    @DeleteMapping("/{formaPagamentoId}")
+    @Override
+    @DeleteMapping(value = "/{formaPagamentoId}", produces = {})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void remover(@PathVariable Long formaPagamentoId) {
         cadastroFormaPagamento.excluir(formaPagamentoId);
