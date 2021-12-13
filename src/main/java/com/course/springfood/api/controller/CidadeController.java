@@ -4,6 +4,7 @@ import com.course.springfood.api.assembler.CidadeInputDisassembler;
 import com.course.springfood.api.assembler.CidadeModelAssembler;
 import com.course.springfood.api.model.CidadeModel;
 import com.course.springfood.api.model.input.CidadeInput;
+import com.course.springfood.api.openapi.controller.CidadeControllerOpenApi;
 import com.course.springfood.domain.exception.EstadoNaoEncontradoException;
 import com.course.springfood.domain.exception.NegocioException;
 import com.course.springfood.domain.model.Cidade;
@@ -11,14 +12,15 @@ import com.course.springfood.domain.repository.CidadeRepository;
 import com.course.springfood.domain.service.CadastroCidadeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/cidades")
-public class CidadeController {
+@RequestMapping(path = "/cidades")
+public class CidadeController implements CidadeControllerOpenApi {
 
     @Autowired
     private CidadeRepository cidadeRepository;
@@ -32,21 +34,21 @@ public class CidadeController {
     @Autowired
     private CidadeInputDisassembler cidadeInputDisassembler;
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CidadeModel> listar() {
         List<Cidade> todasCidades = cidadeRepository.findAll();
 
         return cidadeModelAssembler.toCollectionModel(todasCidades);
     }
 
-    @GetMapping("/{cidadeId}")
+    @GetMapping(path = "/{cidadeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CidadeModel buscar(@PathVariable Long cidadeId) {
         Cidade cidade = cadastroCidade.buscarOuFalhar(cidadeId);
 
         return cidadeModelAssembler.toModel(cidade);
     }
 
-    @PostMapping
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public CidadeModel adicionar(@RequestBody @Valid CidadeInput cidadeInput) {
         try {
@@ -60,7 +62,7 @@ public class CidadeController {
         }
     }
 
-    @PutMapping("/{cidadeId}")
+    @PutMapping(path = "/{cidadeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CidadeModel atualizar(@PathVariable Long cidadeId,
                                  @RequestBody @Valid CidadeInput cidadeInput) {
         try {
