@@ -1,20 +1,28 @@
 package com.course.springfood.core.openapi;
 
 import com.course.springfood.api.exceptionhandler.Problem;
+import com.course.springfood.api.model.PedidoResumoModel;
 import com.course.springfood.api.openapi.model.PageableModelOpenApi;
+import com.course.springfood.api.openapi.model.PedidosResumoModelOpenApi;
 import com.fasterxml.classmate.TypeResolver;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.context.request.ServletWebRequest;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
-import springfox.documentation.builders.*;
+import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RepresentationBuilder;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.builders.ResponseBuilder;
+import springfox.documentation.schema.AlternateTypeRules;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.service.Response;
@@ -50,21 +58,24 @@ public class SpringFoxConfig {
                 .globalResponses(HttpMethod.PUT, globalPostPutResponseMessages())
                 .globalResponses(HttpMethod.DELETE, globalDeleteResponseMessages())
                 .additionalModels(typeResolver.resolve(Problem.class))
-//                .globalRequestParameters(Collections.singletonList(
-//                        new RequestParameterBuilder()
-//                                .name("campos")
-//                                .description("Nomes das propriedades para filtrar na resposta, separados por vírgula")
-//                                .in(ParameterType.QUERY)
-//                                .required(true)
-//                                .query(q -> q.model(m -> m.scalarModel(ScalarType.STRING)))
-//                                .build())
-//                )
                 .ignoredParameterTypes(ServletWebRequest.class,
                         URL.class, URI.class, URLStreamHandler.class, Resource.class,
                         File.class, InputStream.class)
                 .directModelSubstitute(Pageable.class, PageableModelOpenApi.class)
+                .alternateTypeRules(AlternateTypeRules.newRule(
+                        typeResolver.resolve(Page.class, PedidoResumoModel.class),
+                        PedidosResumoModelOpenApi.class))
                 .apiInfo(apiInfo())
-                .tags(new Tag("Cidades", "Gerencia as cidades"));
+                .tags(new Tag("Cidades", "Gerencia as cidades"),
+                        new Tag("Grupos", "Gerencia os grupos de usuários"),
+                        new Tag("Cozinhas", "Gerencia as cozinhas"),
+                        new Tag("Formas de pagamento", "Gerencia as formas de pagamento"),
+                        new Tag("Pedidos", "Gerencia os pedidos"),
+                        new Tag("Restaurantes", "Gerencia os restaurantes"),
+                        new Tag("Estados", "Gerencia os estados"),
+                        new Tag("Produtos", "Gerencia os produtos de restaurantes"),
+                        new Tag("Usuários", "Gerencia os usuários"),
+                        new Tag("Estatísticas", "Estatísticas do SpringFood"));
     }
 
     @Bean

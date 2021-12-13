@@ -1,7 +1,8 @@
 package com.course.springfood.api.controller;
 
+import com.course.springfood.api.openapi.controller.EstatisticasControllerOpenApi;
 import com.course.springfood.domain.filter.VendaDiariaFilter;
-import com.course.springfood.domain.model.VendaDiaria;
+import com.course.springfood.domain.model.dto.VendaDiaria;
 import com.course.springfood.domain.service.VendaQueryService;
 import com.course.springfood.domain.service.VendaReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/estatisticas")
-public class EstatisticasController {
+public class EstatisticasController implements EstatisticasControllerOpenApi {
 
     @Autowired
     private VendaQueryService vendaQueryService;
@@ -25,12 +26,14 @@ public class EstatisticasController {
     @Autowired
     private VendaReportService vendaReportService;
 
+    @Override
     @GetMapping(path = "/vendas-diarias", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<VendaDiaria> consultarVendasDiarias(VendaDiariaFilter filtro,
                                                     @RequestParam(required = false, defaultValue = "+00:00") String timeOffset) {
         return vendaQueryService.consultarVendasDiarias(filtro, timeOffset);
     }
 
+    @Override
     @GetMapping(path = "/vendas-diarias", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<byte[]> consultarVendasDiariasPdf(VendaDiariaFilter filtro,
                                                             @RequestParam(required = false, defaultValue = "+00:00") String timeOffset) {
