@@ -6,15 +6,22 @@ import lombok.Setter;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
-@Relation(collectionRelation = "estados")
+import java.math.BigDecimal;
+
+@Relation(collectionRelation = "restaurantes")
 @Setter
 @Getter
-public class EstadoModel extends RepresentationModel<EstadoModel> {
+public class RestauranteBasicoModel extends RepresentationModel<RestauranteBasicoModel> {
 
     @ApiModelProperty(example = "1")
     private Long id;
 
-    @ApiModelProperty(example = "Minas Gerais")
+    @ApiModelProperty(example = "Gourmet")
     private String nome;
+
+    @ApiModelProperty(example = "10.00")
+    private BigDecimal taxaFrete;
+
+    private CozinhaModel cozinha;
 
 }

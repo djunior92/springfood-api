@@ -3,14 +3,17 @@ package com.course.springfood.api.model;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.List;
 
+@Relation(collectionRelation = "pedidos")
 @Setter
 @Getter
-public class PedidoModel {
+public class PedidoModel extends RepresentationModel<PedidoModel> {
 
     @ApiModelProperty(example = "10304a8d-eb74-453d-b1ee-9158af497dfe")
     private String codigo;
@@ -39,7 +42,7 @@ public class PedidoModel {
     @ApiModelProperty(example = "2021-12-12T22:36:00Z")
     private OffsetDateTime dataCancelamento;
 
-    private RestauranteResumoModel restaurante;
+    private RestauranteApenasNomeModel restaurante;
     private UsuarioModel cliente;
     private FormaPagamentoModel formaPagamento;
     private EnderecoModel enderecoEntrega;

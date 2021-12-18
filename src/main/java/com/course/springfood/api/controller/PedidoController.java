@@ -7,6 +7,7 @@ import com.course.springfood.api.model.PedidoModel;
 import com.course.springfood.api.model.PedidoResumoModel;
 import com.course.springfood.api.model.input.PedidoInput;
 import com.course.springfood.api.openapi.controller.PedidoControllerOpenApi;
+import com.course.springfood.core.data.PageWrapper;
 import com.course.springfood.core.data.PageableTranslator;
 import com.course.springfood.domain.exception.EntidadeNaoEncontradaException;
 import com.course.springfood.domain.exception.NegocioException;
@@ -18,15 +19,15 @@ import com.course.springfood.domain.service.EmissaoPedidoService;
 import com.course.springfood.infrastructure.repository.spec.PedidoSpecs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -48,22 +49,21 @@ public class PedidoController implements PedidoControllerOpenApi{
     @Autowired
     private PedidoInputDisassembler pedidoInputDisassembler;
 
+    @Autowired
+    private PagedResourcesAssembler<Pedido> pagedResourcesAssembler;
+
     @Override
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public Page<PedidoResumoModel> pesquisar(PedidoFilter filtro,
-                                             @PageableDefault(size = 10) Pageable pageable) {
-        pageable = traduzirPageable(pageable);
+    public PagedModel<PedidoResumoModel> pesquisar(PedidoFilter filtro,
+                                                   @PageableDefault(size = 10) Pageable pageable) {
+        Pageable pageableTraduzido = traduzirPageable(pageable);
 
         Page<Pedido> pedidosPage = pedidoRepository.findAll(
-                PedidoSpecs.usandoFiltro(filtro), pageable);
+                PedidoSpecs.usandoFiltro(filtro), pageableTraduzido);
 
-        List<PedidoResumoModel> pedidosResumoModel = pedidoResumoModelAssembler
-                .toCollectionModel(pedidosPage.getContent());
+        pedidosPage = new PageWrapper<>(pedidosPage, pageable);
 
-        Page<PedidoResumoModel> pedidosResumoModelPage = new PageImpl<>(
-                pedidosResumoModel, pageable, pedidosPage.getTotalElements());
-
-        return pedidosResumoModelPage;
+        return pagedResourcesAssembler.toModel(pedidosPage, pedidoResumoModelAssembler);
     }
 
     @Override
@@ -100,7 +100,7 @@ public class PedidoController implements PedidoControllerOpenApi{
                 "taxaFrete", "taxaFrete",
                 "valorTotal", "valorTotal",
                 "dataCriacao", "dataCriacao",
-                "restaurante.nome", "restaurante.nome",
+                "nomerestaurante", "restaurante.nome",
                 "restaurante.id", "restaurante.id",
                 "cliente.id", "cliente.id",
                 "cliente.nome", "cliente.nome"

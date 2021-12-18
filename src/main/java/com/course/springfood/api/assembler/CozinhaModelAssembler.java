@@ -1,28 +1,36 @@
 package com.course.springfood.api.assembler;
 
+import com.course.springfood.api.SpringLinks;
+import com.course.springfood.api.controller.CozinhaController;
 import com.course.springfood.api.model.CozinhaModel;
 import com.course.springfood.domain.model.Cozinha;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Component
-public class CozinhaModelAssembler {
+public class CozinhaModelAssembler
+        extends RepresentationModelAssemblerSupport<Cozinha, CozinhaModel> {
 
     @Autowired
     private ModelMapper modelMapper;
 
-    public CozinhaModel toModel(Cozinha cozinha) {
-        return modelMapper.map(cozinha, CozinhaModel.class);
+    @Autowired
+    private SpringLinks springLinks;
+
+    public CozinhaModelAssembler() {
+        super(CozinhaController.class, CozinhaModel.class);
     }
 
-    public List<CozinhaModel> toCollectionModel(List<Cozinha> cozinhas) {
-        return cozinhas.stream()
-                .map(cozinha -> toModel(cozinha))
-                .collect(Collectors.toList());
+    @Override
+    public CozinhaModel toModel(Cozinha cozinha) {
+        CozinhaModel cozinhaModel = createModelWithId(cozinha.getId(), cozinha);
+        modelMapper.map(cozinha, cozinhaModel);
+
+        cozinhaModel.add(springLinks.linkToCozinhas("cozinhas"));
+
+        return cozinhaModel;
     }
 
 }

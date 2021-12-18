@@ -1,4 +1,4 @@
-package com.course.springfood.core.openapi;
+package com.course.springfood.core.springfox;
 
 import com.course.springfood.api.exceptionhandler.Problem;
 import com.course.springfood.api.model.PedidoResumoModel;
@@ -17,11 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.context.request.ServletWebRequest;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RepresentationBuilder;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.builders.ResponseBuilder;
+import springfox.documentation.builders.*;
 import springfox.documentation.schema.AlternateTypeRules;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
@@ -75,7 +71,9 @@ public class SpringFoxConfig {
                         new Tag("Estados", "Gerencia os estados"),
                         new Tag("Produtos", "Gerencia os produtos de restaurantes"),
                         new Tag("Usuários", "Gerencia os usuários"),
-                        new Tag("Estatísticas", "Estatísticas do SpringFood"));
+                        new Tag("Estatísticas", "Estatísticas do SpringFood"),
+                        new Tag("Permissões", "Gerencia as permissões"));
+
     }
 
     @Bean

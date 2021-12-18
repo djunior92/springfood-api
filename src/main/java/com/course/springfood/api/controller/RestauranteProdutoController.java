@@ -1,5 +1,6 @@
 package com.course.springfood.api.controller;
 
+import com.course.springfood.api.SpringLinks;
 import com.course.springfood.api.assembler.ProdutoInputDisassembler;
 import com.course.springfood.api.assembler.ProdutoModelAssembler;
 import com.course.springfood.api.model.ProdutoModel;
@@ -11,6 +12,7 @@ import com.course.springfood.domain.repository.ProdutoRepository;
 import com.course.springfood.domain.service.CadastroProdutoService;
 import com.course.springfood.domain.service.CadastroRestauranteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -37,9 +39,13 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
     @Autowired
     private ProdutoInputDisassembler produtoInputDisassembler;
 
+    @Autowired
+    private SpringLinks springLinks;
+
+    @Override
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ProdutoModel> listar(@PathVariable Long restauranteId,
-                                     @RequestParam(required = false) boolean incluirInativos) {
+    public CollectionModel<ProdutoModel> listar(@PathVariable Long restauranteId,
+                                                @RequestParam(required = false, defaultValue = "false") Boolean incluirInativos) {
         Restaurante restaurante = cadastroRestaurante.buscarOuFalhar(restauranteId);
 
         List<Produto> todosProdutos = null;
@@ -50,17 +56,20 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
             todosProdutos = produtoRepository.findAtivosByRestaurante(restaurante);
         }
 
-        return produtoModelAssembler.toCollectionModel(todosProdutos);
+        return produtoModelAssembler.toCollectionModel(todosProdutos)
+                .add(springLinks.linkToProdutos(restauranteId));
     }
 
-    @GetMapping(value = "/{produtoId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Override
+    @GetMapping("/{produtoId}")
     public ProdutoModel buscar(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
         Produto produto = cadastroProduto.buscarOuFalhar(restauranteId, produtoId);
 
         return produtoModelAssembler.toModel(produto);
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @Override
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ProdutoModel adicionar(@PathVariable Long restauranteId,
                                   @RequestBody @Valid ProdutoInput produtoInput) {
@@ -74,7 +83,8 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
         return produtoModelAssembler.toModel(produto);
     }
 
-    @PutMapping(value = "/{produtoId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Override
+    @PutMapping("/{produtoId}")
     public ProdutoModel atualizar(@PathVariable Long restauranteId, @PathVariable Long produtoId,
                                   @RequestBody @Valid ProdutoInput produtoInput) {
         Produto produtoAtual = cadastroProduto.buscarOuFalhar(restauranteId, produtoId);
