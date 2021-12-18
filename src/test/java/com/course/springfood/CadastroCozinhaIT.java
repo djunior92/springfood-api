@@ -3,7 +3,6 @@ package com.course.springfood;
 import com.course.springfood.domain.model.Cozinha;
 import com.course.springfood.domain.repository.CozinhaRepository;
 import com.course.springfood.util.DatabaseCleaner;
-import com.course.springfood.util.ResourceUtils;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.Before;
@@ -16,7 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static com.course.springfood.util.ResourceUtils.*;
+import static com.course.springfood.util.ResourceUtils.getContentFromResource;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -71,7 +70,7 @@ public class CadastroCozinhaIT {
                 .when()
                 .get()
                 .then()
-                .body("content", hasSize(quantidadeCozinhasCadastradas));
+                .body("_embedded.cozinhas", hasSize(quantidadeCozinhasCadastradas));
     }
 
     @Test
