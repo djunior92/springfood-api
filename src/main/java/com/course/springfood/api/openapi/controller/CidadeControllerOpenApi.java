@@ -4,14 +4,13 @@ import com.course.springfood.api.exceptionhandler.Problem;
 import com.course.springfood.api.model.CidadeModel;
 import com.course.springfood.api.model.input.CidadeInput;
 import io.swagger.annotations.*;
-
-import java.util.List;
+import org.springframework.hateoas.CollectionModel;
 
 @Api(tags = "Cidades")
 public interface CidadeControllerOpenApi {
 
     @ApiOperation("Lista as cidades")
-    public List<CidadeModel> listar();
+    public CollectionModel<CidadeModel> listar();
 
     @ApiOperation("Busca uma cidade por ID")
     @ApiResponses({

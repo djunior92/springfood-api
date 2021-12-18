@@ -58,12 +58,12 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         String detail = ex.getMessage();
         String userMessage = "O arquivo que você está tentando enviar excede o tamanho máximo permitido";
 
-        if (ex.getRootCause() instanceof FileUploadBase.FileSizeLimitExceededException) {
-            var specEx = (FileUploadBase.FileSizeLimitExceededException) ex.getRootCause();
-            detail = specEx.getMessage();
-            userMessage = String.format("O arquivo que você está tentando enviar excede o tamanho máximo permitido de% d bytes",
-                    specEx.getPermittedSize());
-        }
+//        if (ex.getRootCause() instanceof FileUploadBase.FileSizeLimitExceededException) {
+//            var specEx = (FileUploadBase.FileSizeLimitExceededException) ex.getRootCause();
+//            detail = specEx.getMessage();
+//            userMessage = String.format("O arquivo que você está tentando enviar excede o tamanho máximo permitido de% d bytes",
+//                    specEx.getPermittedSize());
+//        }
 
         Problem problem = createProblemBuilder(status, problemType, detail)
                 .userMessage(userMessage)
