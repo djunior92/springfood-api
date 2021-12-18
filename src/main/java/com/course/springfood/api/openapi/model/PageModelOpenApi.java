@@ -1,16 +1,14 @@
 package com.course.springfood.api.openapi.model;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
+@ApiModel("PageModel")
 @Getter
 @Setter
-public class PagedModelOpenApi<T> {
-
-    private List<T> content;
+public class PageModelOpenApi {
 
     @ApiModelProperty(example = "10", value = "Quantidade de registros por página")
     private Long size;
