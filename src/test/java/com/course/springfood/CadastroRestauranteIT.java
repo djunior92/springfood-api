@@ -9,26 +9,22 @@ import com.course.springfood.domain.repository.CozinhaRepository;
 import com.course.springfood.domain.repository.EstadoRepository;
 import com.course.springfood.domain.repository.RestauranteRepository;
 import com.course.springfood.util.DatabaseCleaner;
-import com.course.springfood.util.ResourceUtils;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 
-import static com.course.springfood.util.ResourceUtils.*;
+import static com.course.springfood.util.ResourceUtils.getContentFromResource;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource("/application-test.properties")
 public class CadastroRestauranteIT {
@@ -65,7 +61,7 @@ public class CadastroRestauranteIT {
     private Restaurante donTabascoRestaurante;
     private Restaurante sushiRestaurant;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.port = port;
