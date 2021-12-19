@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/restaurantes/{restauranteId}/formas-pagamento")
+@RequestMapping(path = "/v1/restaurantes/{restauranteId}/formas-pagamento")
 public class RestauranteFormaPagamentoController implements RestauranteFormaPagamentoControllerOpenApi {
 
     @Autowired
