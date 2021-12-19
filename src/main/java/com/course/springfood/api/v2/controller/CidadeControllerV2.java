@@ -5,6 +5,7 @@ import com.course.springfood.api.v2.assembler.CidadeInputDisassemblerV2;
 import com.course.springfood.api.v2.assembler.CidadeModelAssemblerV2;
 import com.course.springfood.api.v2.model.CidadeModelV2;
 import com.course.springfood.api.v2.model.input.CidadeInputV2;
+import com.course.springfood.api.v2.openapi.CidadeControllerV2OpenApi;
 import com.course.springfood.domain.exception.EstadoNaoEncontradoException;
 import com.course.springfood.domain.exception.NegocioException;
 import com.course.springfood.domain.model.Cidade;
@@ -13,6 +14,7 @@ import com.course.springfood.domain.service.CadastroCidadeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,7 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/v2/cidades")
-public class CidadeControllerV2 {
+public class CidadeControllerV2 implements CidadeControllerV2OpenApi {
 
     @Autowired
     private CidadeRepository cidadeRepository;
@@ -34,21 +36,24 @@ public class CidadeControllerV2 {
     @Autowired
     private CidadeInputDisassemblerV2 cidadeInputDisassembler;
 
-    @GetMapping
+    @Override
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public CollectionModel<CidadeModelV2> listar() {
         List<Cidade> todasCidades = cidadeRepository.findAll();
 
         return cidadeModelAssembler.toCollectionModel(todasCidades);
     }
 
-    @GetMapping(value = "/{cidadeId}")
+    @Override
+    @GetMapping(value = "/{cidadeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CidadeModelV2 buscar(@PathVariable Long cidadeId) {
         Cidade cidade = cadastroCidade.buscarOuFalhar(cidadeId);
 
         return cidadeModelAssembler.toModel(cidade);
     }
 
-    @PostMapping
+    @Override
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public CidadeModelV2 adicionar(@RequestBody @Valid CidadeInputV2 cidadeInput) {
         try {
@@ -66,7 +71,8 @@ public class CidadeControllerV2 {
         }
     }
 
-    @PutMapping(value = "/{cidadeId}")
+    @Override
+    @PutMapping(value = "/{cidadeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CidadeModelV2 atualizar(@PathVariable Long cidadeId,
                                    @RequestBody @Valid CidadeInputV2 cidadeInput) {
         try {
@@ -82,7 +88,8 @@ public class CidadeControllerV2 {
         }
     }
 
-    @DeleteMapping(value = "/{cidadeId}")
+    @Override
+    @DeleteMapping("/{cidadeId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void remover(@PathVariable Long cidadeId) {
         cadastroCidade.excluir(cidadeId);

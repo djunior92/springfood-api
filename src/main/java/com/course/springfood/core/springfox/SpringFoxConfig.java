@@ -1,28 +1,12 @@
 package com.course.springfood.core.springfox;
 
 import com.course.springfood.api.exceptionhandler.Problem;
-import com.course.springfood.api.v1.model.CidadeModel;
-import com.course.springfood.api.v1.model.CozinhaModel;
-import com.course.springfood.api.v1.model.EstadoModel;
-import com.course.springfood.api.v1.model.FormaPagamentoModel;
-import com.course.springfood.api.v1.model.GrupoModel;
-import com.course.springfood.api.v1.model.PedidoResumoModel;
-import com.course.springfood.api.v1.model.PermissaoModel;
-import com.course.springfood.api.v1.model.ProdutoModel;
-import com.course.springfood.api.v1.model.RestauranteBasicoModel;
-import com.course.springfood.api.v1.model.UsuarioModel;
-import com.course.springfood.api.v1.openapi.model.CidadesModelOpenApi;
-import com.course.springfood.api.v1.openapi.model.CozinhasModelOpenApi;
-import com.course.springfood.api.v1.openapi.model.EstadosModelOpenApi;
-import com.course.springfood.api.v1.openapi.model.FormasPagamentoModelOpenApi;
-import com.course.springfood.api.v1.openapi.model.GruposModelOpenApi;
-import com.course.springfood.api.v1.openapi.model.LinksModelOpenApi;
-import com.course.springfood.api.v1.openapi.model.PageableModelOpenApi;
-import com.course.springfood.api.v1.openapi.model.PedidosResumoModelOpenApi;
-import com.course.springfood.api.v1.openapi.model.PermissoesModelOpenApi;
-import com.course.springfood.api.v1.openapi.model.ProdutosModelOpenApi;
-import com.course.springfood.api.v1.openapi.model.RestaurantesBasicoModelOpenApi;
-import com.course.springfood.api.v1.openapi.model.UsuariosModelOpenApi;
+import com.course.springfood.api.v1.model.*;
+import com.course.springfood.api.v1.openapi.model.*;
+import com.course.springfood.api.v2.model.CidadeModelV2;
+import com.course.springfood.api.v2.model.CozinhaModelV2;
+import com.course.springfood.api.v2.openapi.model.CidadesModelV2OpenApi;
+import com.course.springfood.api.v2.openapi.model.CozinhasModelV2OpenApi;
 import com.fasterxml.classmate.TypeResolver;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.Bean;
@@ -38,11 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.context.request.ServletWebRequest;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RepresentationBuilder;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.builders.ResponseBuilder;
+import springfox.documentation.builders.*;
 import springfox.documentation.schema.AlternateTypeRules;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
@@ -64,13 +44,15 @@ import java.util.function.Consumer;
 @Configuration
 @Import(BeanValidatorPluginsConfiguration.class)
 public class SpringFoxConfig {
+
     @Bean
-    public Docket apiDocket() {
+    public Docket apiDocketV1() {
         var typeResolver = new TypeResolver();
         return new Docket(DocumentationType.OAS_30)
+                .groupName("V1")
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.course.springfood.api"))
-                .paths(PathSelectors.any())
+                .paths(PathSelectors.ant("/v1/**"))
                 .build()
                 .useDefaultResponseMessages(false)
                 .globalResponses(HttpMethod.GET, globalGetResponseMessages())
@@ -82,7 +64,7 @@ public class SpringFoxConfig {
                         URL.class, URI.class, URLStreamHandler.class, Resource.class,
                         File.class, InputStream.class)
                 .directModelSubstitute(Pageable.class, PageableModelOpenApi.class)
-                .directModelSubstitute(Links .class, LinksModelOpenApi .class)
+                .directModelSubstitute(Links.class, LinksModelOpenApi.class)
 
                 .alternateTypeRules(AlternateTypeRules.newRule(
                         typeResolver.resolve(PagedModel.class, CozinhaModel.class),
@@ -124,7 +106,8 @@ public class SpringFoxConfig {
                         typeResolver.resolve(CollectionModel.class, UsuarioModel.class),
                         UsuariosModelOpenApi.class))
 
-                .apiInfo(apiInfo())
+                .apiInfo(apiInfoV1())
+
                 .tags(new Tag("Cidades", "Gerencia as cidades"),
                         new Tag("Grupos", "Gerencia os grupos de usuários"),
                         new Tag("Cozinhas", "Gerencia as cozinhas"),
@@ -140,6 +123,42 @@ public class SpringFoxConfig {
     }
 
     @Bean
+    public Docket apiDocketV2() {
+        var typeResolver = new TypeResolver();
+
+        return new Docket(DocumentationType.OAS_30)
+                .groupName("V2")
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.course.springfood.api"))
+                .paths(PathSelectors.ant("/v2/**"))
+                .build()
+                .useDefaultResponseMessages(false)
+                .globalResponses(HttpMethod.GET, globalGetResponseMessages())
+                .globalResponses(HttpMethod.POST, globalPostPutResponseMessages())
+                .globalResponses(HttpMethod.PUT, globalPostPutResponseMessages())
+                .globalResponses(HttpMethod.DELETE, globalDeleteResponseMessages())
+                .additionalModels(typeResolver.resolve(Problem.class))
+                .ignoredParameterTypes(ServletWebRequest.class,
+                        URL.class, URI.class, URLStreamHandler.class, Resource.class,
+                        File.class, InputStream.class)
+                .directModelSubstitute(Pageable.class, PageableModelOpenApi.class)
+                .directModelSubstitute(Links.class, LinksModelOpenApi.class)
+
+                .alternateTypeRules(AlternateTypeRules.newRule(
+                        typeResolver.resolve(PagedModel.class, CozinhaModelV2.class),
+                        CozinhasModelV2OpenApi.class))
+
+                .alternateTypeRules(AlternateTypeRules.newRule(
+                        typeResolver.resolve(CollectionModel.class, CidadeModelV2.class),
+                        CidadesModelV2OpenApi.class))
+
+                .apiInfo(apiInfoV2())
+
+                .tags(new Tag("Cidades", "Gerencia as cidades"),
+                        new Tag("Cozinhas", "Gerencia as cozinhas"));
+    }
+
+    @Bean
     public JacksonModuleRegistrar springFoxJacksonConfig() {
         return objectMapper -> objectMapper.registerModule(new JavaTimeModule());
     }
@@ -149,7 +168,7 @@ public class SpringFoxConfig {
                 new ResponseBuilder()
                         .code(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()))
                         .description("Erro interno do Servidor")
-                        .representation( MediaType.APPLICATION_JSON )
+                        .representation(MediaType.APPLICATION_JSON)
                         .apply(getProblemaModelReference())
                         .build(),
                 new ResponseBuilder()
@@ -164,13 +183,13 @@ public class SpringFoxConfig {
                 new ResponseBuilder()
                         .code(String.valueOf(HttpStatus.BAD_REQUEST.value()))
                         .description("Requisição inválida (erro do cliente)")
-                        .representation( MediaType.APPLICATION_JSON )
+                        .representation(MediaType.APPLICATION_JSON)
                         .apply(getProblemaModelReference())
                         .build(),
                 new ResponseBuilder()
                         .code(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()))
                         .description("Erro interno no servidor")
-                        .representation( MediaType.APPLICATION_JSON )
+                        .representation(MediaType.APPLICATION_JSON)
                         .apply(getProblemaModelReference())
                         .build(),
                 new ResponseBuilder()
@@ -180,7 +199,7 @@ public class SpringFoxConfig {
                 new ResponseBuilder()
                         .code(String.valueOf(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value()))
                         .description("Requisição recusada porque o corpo está em um formato não suportado")
-                        .representation( MediaType.APPLICATION_JSON )
+                        .representation(MediaType.APPLICATION_JSON)
                         .apply(getProblemaModelReference())
                         .build()
         );
@@ -191,13 +210,13 @@ public class SpringFoxConfig {
                 new ResponseBuilder()
                         .code(String.valueOf(HttpStatus.BAD_REQUEST.value()))
                         .description("Requisição inválida (erro do cliente)")
-                        .representation( MediaType.APPLICATION_JSON )
+                        .representation(MediaType.APPLICATION_JSON)
                         .apply(getProblemaModelReference())
                         .build(),
                 new ResponseBuilder()
                         .code(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()))
                         .description("Erro interno no servidor")
-                        .representation( MediaType.APPLICATION_JSON )
+                        .representation(MediaType.APPLICATION_JSON)
                         .apply(getProblemaModelReference())
                         .build()
         );
@@ -209,11 +228,20 @@ public class SpringFoxConfig {
                         q -> q.name("Problema").namespace("com.course.springfood.api.exceptionhandler")))));
     }
 
-    private ApiInfo apiInfo() {
+    private ApiInfo apiInfoV1() {
         return new ApiInfoBuilder()
                 .title("SpringFood API")
                 .description("API aberta para clientes e restaurantes")
                 .version("1")
+                .contact(new Contact("SpringFood", "https://www.springfood.com", "contato@springfood.com"))
+                .build();
+    }
+
+    private ApiInfo apiInfoV2() {
+        return new ApiInfoBuilder()
+                .title("SpringFood API")
+                .description("API aberta para clientes e restaurantes")
+                .version("2")
                 .contact(new Contact("SpringFood", "https://www.springfood.com", "contato@springfood.com"))
                 .build();
     }
