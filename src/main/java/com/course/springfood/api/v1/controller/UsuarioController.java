@@ -20,7 +20,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/usuarios")
+@RequestMapping(value = "/v1/usuarios")
 public class UsuarioController implements UsuarioControllerOpenApi {
 
     @Autowired

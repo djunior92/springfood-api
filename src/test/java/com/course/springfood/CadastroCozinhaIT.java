@@ -41,7 +41,7 @@ public class CadastroCozinhaIT {
     public void setUp() {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.port = port;
-        RestAssured.basePath = "/cozinhas";
+        RestAssured.basePath = "/v1/cozinhas";
 
         jsonCorretoCozinhaChinesa = getContentFromResource(
                 "/json/correto/cozinha-chinesa.json");

@@ -65,7 +65,7 @@ public class CadastroRestauranteIT {
     public void setUp() {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.port = port;
-        RestAssured.basePath = "/restaurantes";
+        RestAssured.basePath = "/v1/restaurantes";
 
         jsonRestauranteCorreto = getContentFromResource(
                 "/json/correto/restaurante-khea-thai.json");
