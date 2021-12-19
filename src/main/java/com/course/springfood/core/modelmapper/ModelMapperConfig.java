@@ -1,7 +1,9 @@
 package com.course.springfood.core.modelmapper;
 
-import com.course.springfood.api.model.EnderecoModel;
-import com.course.springfood.api.model.input.ItemPedidoInput;
+import com.course.springfood.api.v1.model.EnderecoModel;
+import com.course.springfood.api.v1.model.input.ItemPedidoInput;
+import com.course.springfood.api.v2.model.input.CidadeInputV2;
+import com.course.springfood.domain.model.Cidade;
 import com.course.springfood.domain.model.Endereco;
 import com.course.springfood.domain.model.ItemPedido;
 import org.modelmapper.ModelMapper;
@@ -14,6 +16,9 @@ public class ModelMapperConfig {
     @Bean
     public ModelMapper modelMapper() {
         var modelMapper = new ModelMapper();
+
+        modelMapper.createTypeMap(CidadeInputV2.class, Cidade.class)
+                .addMappings(mapper -> mapper.skip(Cidade::setId));
 
 //		modelMapper.createTypeMap(Restaurante.class, RestauranteModel.class)
 //			.addMapping(Restaurante::getTaxaFrete, RestauranteModel::setPrecoFrete);
