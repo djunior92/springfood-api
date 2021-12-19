@@ -64,7 +64,7 @@ public class SpringFoxConfig {
                         URL.class, URI.class, URLStreamHandler.class, Resource.class,
                         File.class, InputStream.class)
                 .directModelSubstitute(Pageable.class, PageableModelOpenApi.class)
-                .directModelSubstitute(Links.class, LinksModelOpenApi.class)
+                .directModelSubstitute(Links .class, LinksModelOpenApi .class)
 
                 .alternateTypeRules(AlternateTypeRules.newRule(
                         typeResolver.resolve(PagedModel.class, CozinhaModel.class),
@@ -168,7 +168,7 @@ public class SpringFoxConfig {
                 new ResponseBuilder()
                         .code(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()))
                         .description("Erro interno do Servidor")
-                        .representation(MediaType.APPLICATION_JSON)
+                        .representation( MediaType.APPLICATION_JSON )
                         .apply(getProblemaModelReference())
                         .build(),
                 new ResponseBuilder()
@@ -183,13 +183,13 @@ public class SpringFoxConfig {
                 new ResponseBuilder()
                         .code(String.valueOf(HttpStatus.BAD_REQUEST.value()))
                         .description("Requisição inválida (erro do cliente)")
-                        .representation(MediaType.APPLICATION_JSON)
+                        .representation( MediaType.APPLICATION_JSON )
                         .apply(getProblemaModelReference())
                         .build(),
                 new ResponseBuilder()
                         .code(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()))
                         .description("Erro interno no servidor")
-                        .representation(MediaType.APPLICATION_JSON)
+                        .representation( MediaType.APPLICATION_JSON )
                         .apply(getProblemaModelReference())
                         .build(),
                 new ResponseBuilder()
@@ -199,7 +199,7 @@ public class SpringFoxConfig {
                 new ResponseBuilder()
                         .code(String.valueOf(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value()))
                         .description("Requisição recusada porque o corpo está em um formato não suportado")
-                        .representation(MediaType.APPLICATION_JSON)
+                        .representation( MediaType.APPLICATION_JSON )
                         .apply(getProblemaModelReference())
                         .build()
         );
@@ -210,13 +210,13 @@ public class SpringFoxConfig {
                 new ResponseBuilder()
                         .code(String.valueOf(HttpStatus.BAD_REQUEST.value()))
                         .description("Requisição inválida (erro do cliente)")
-                        .representation(MediaType.APPLICATION_JSON)
+                        .representation( MediaType.APPLICATION_JSON )
                         .apply(getProblemaModelReference())
                         .build(),
                 new ResponseBuilder()
                         .code(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()))
                         .description("Erro interno no servidor")
-                        .representation(MediaType.APPLICATION_JSON)
+                        .representation( MediaType.APPLICATION_JSON )
                         .apply(getProblemaModelReference())
                         .build()
         );
@@ -230,7 +230,10 @@ public class SpringFoxConfig {
 
     private ApiInfo apiInfoV1() {
         return new ApiInfoBuilder()
-                .title("SpringFood API")
+                .title("SpringFood API (Depreciada)")
+                .description("API aberta para clientes e restaurantes.<br>"
+                        + "<strong>Essa versão da API está depreciada e deixará de existir a partir de xx/xx/xxxx. "
+                        + "Use a versão mais atual da API.")
                 .description("API aberta para clientes e restaurantes")
                 .version("1")
                 .contact(new Contact("SpringFood", "https://www.springfood.com", "contato@springfood.com"))
