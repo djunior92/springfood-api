@@ -9,6 +9,7 @@ import com.course.springfood.api.v1.model.input.PedidoInput;
 import com.course.springfood.api.v1.openapi.controller.PedidoControllerOpenApi;
 import com.course.springfood.core.data.PageWrapper;
 import com.course.springfood.core.data.PageableTranslator;
+import com.course.springfood.core.security.SpringSecurity;
 import com.course.springfood.domain.exception.EntidadeNaoEncontradaException;
 import com.course.springfood.domain.exception.NegocioException;
 import com.course.springfood.domain.filter.PedidoFilter;
@@ -52,6 +53,9 @@ public class PedidoController implements PedidoControllerOpenApi{
     @Autowired
     private PagedResourcesAssembler<Pedido> pagedResourcesAssembler;
 
+    @Autowired
+    private SpringSecurity springSecurity;
+
     @Override
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public PagedModel<PedidoResumoModel> pesquisar(PedidoFilter filtro,
@@ -67,15 +71,14 @@ public class PedidoController implements PedidoControllerOpenApi{
     }
 
     @Override
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public PedidoModel adicionar(@Valid @RequestBody PedidoInput pedidoInput) {
         try {
             Pedido novoPedido = pedidoInputDisassembler.toDomainObject(pedidoInput);
 
-            // TODO pegar usuário autenticado
             novoPedido.setCliente(new Usuario());
-            novoPedido.getCliente().setId(1L);
+            novoPedido.getCliente().setId(springSecurity.getUsuarioId());
 
             novoPedido = emissaoPedido.emitir(novoPedido);
 
