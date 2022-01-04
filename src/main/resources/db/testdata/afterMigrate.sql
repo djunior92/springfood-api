@@ -75,11 +75,12 @@ insert into produto (nome, descricao, preco, ativo, restaurante_id) values ('X-B
 insert into grupo (id, nome) values (1, 'Gerente'), (2, 'Vendedor'), (3, 'Secretária'), (4, 'Cadastrador');
 
 insert into usuario (id, nome, email, senha, data_cadastro) values
-(1, 'João da Silva', 'joao@springfood.com', '123', utc_timestamp),
-(2, 'Maria Alves', 'maria@springfood.com', '123', utc_timestamp),
-(3, 'José Marcos', 'jose@springfood.com', '123', utc_timestamp),
-(4, 'Luana Marques', 'luana@springfood.com', '123', utc_timestamp),
-(5, 'Marcos Garcia', 'marcos@springfood.com', '123', utc_timestamp);
+(1, 'Teste', 'teste@springfood.com', '$2a$12$Kzkc6xTqcagwcTLAODmaSOrf5eV8j7KUrZBsPd1syaZXEfNfixgou', utc_timestamp),
+(1, 'João da Silva', 'joao@springfood.com', '$2a$12$Kzkc6xTqcagwcTLAODmaSOrf5eV8j7KUrZBsPd1syaZXEfNfixgou', utc_timestamp),
+(2, 'Maria Alves', 'maria@springfood.com', '$2a$12$Kzkc6xTqcagwcTLAODmaSOrf5eV8j7KUrZBsPd1syaZXEfNfixgou', utc_timestamp),
+(3, 'José Marcos', 'jose@springfood.com', '$2a$12$Kzkc6xTqcagwcTLAODmaSOrf5eV8j7KUrZBsPd1syaZXEfNfixgou', utc_timestamp),
+(4, 'Luana Marques', 'luana@springfood.com', '$2a$12$Kzkc6xTqcagwcTLAODmaSOrf5eV8j7KUrZBsPd1syaZXEfNfixgou', utc_timestamp),
+(5, 'Marcos Garcia', 'marcos@springfood.com', '$2a$12$Kzkc6xTqcagwcTLAODmaSOrf5eV8j7KUrZBsPd1syaZXEfNfixgou', utc_timestamp);
 
 insert into grupo_permissao (grupo_id, permissao_id) values (1, 1), (1, 2), (2, 1), (2, 2), (3, 1);
 
