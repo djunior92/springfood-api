@@ -12,6 +12,7 @@ public enum ProblemType {
     RECURSO_NAO_ENCONTRADO("/recurso-nao-encontrado", "Recurso não encontrado"),
     ENTIDADE_EM_USO("/entidade-em-uso", "Entidade em uso"),
     ERRO_NEGOCIO("/erro-negocio", "Violação de regra de negócio"),
+    ACESSO_NEGADO("/acesso-negado", "Acesso negado"),
     MAX_FILE_SIZE_EXCEEDED("/tamanho-upload-excedido", "Tamanho máximo de upload excedido");
 
 
