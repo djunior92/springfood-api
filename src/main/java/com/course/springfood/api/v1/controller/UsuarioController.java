@@ -7,6 +7,7 @@ import com.course.springfood.api.v1.model.input.SenhaInput;
 import com.course.springfood.api.v1.model.input.UsuarioComSenhaInput;
 import com.course.springfood.api.v1.model.input.UsuarioInput;
 import com.course.springfood.api.v1.openapi.controller.UsuarioControllerOpenApi;
+import com.course.springfood.core.security.CheckSecurity;
 import com.course.springfood.domain.model.Usuario;
 import com.course.springfood.domain.repository.UsuarioRepository;
 import com.course.springfood.domain.service.CadastroUsuarioService;
@@ -20,7 +21,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/v1/usuarios")
+@RequestMapping(path = "/v1/usuarios", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UsuarioController implements UsuarioControllerOpenApi {
 
     @Autowired
@@ -35,21 +36,26 @@ public class UsuarioController implements UsuarioControllerOpenApi {
     @Autowired
     private UsuarioInputDisassembler usuarioInputDisassembler;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @CheckSecurity.UsuariosGruposPermissoes.PodeConsultar
+    @Override
+    @GetMapping
     public CollectionModel<UsuarioModel> listar() {
         List<Usuario> todasUsuarios = usuarioRepository.findAll();
 
         return usuarioModelAssembler.toCollectionModel(todasUsuarios);
     }
 
-    @GetMapping(value = "/{usuarioId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @CheckSecurity.UsuariosGruposPermissoes.PodeConsultar
+    @Override
+    @GetMapping("/{usuarioId}")
     public UsuarioModel buscar(@PathVariable Long usuarioId) {
         Usuario usuario = cadastroUsuario.buscarOuFalhar(usuarioId);
 
         return usuarioModelAssembler.toModel(usuario);
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @Override
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UsuarioModel adicionar(@RequestBody @Valid UsuarioComSenhaInput usuarioInput) {
         Usuario usuario = usuarioInputDisassembler.toDomainObject(usuarioInput);
@@ -58,7 +64,9 @@ public class UsuarioController implements UsuarioControllerOpenApi {
         return usuarioModelAssembler.toModel(usuario);
     }
 
-    @PutMapping(value = "/{usuarioId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @CheckSecurity.UsuariosGruposPermissoes.PodeAlterarUsuario
+    @Override
+    @PutMapping("/{usuarioId}")
     public UsuarioModel atualizar(@PathVariable Long usuarioId,
                                   @RequestBody @Valid UsuarioInput usuarioInput) {
         Usuario usuarioAtual = cadastroUsuario.buscarOuFalhar(usuarioId);
@@ -68,6 +76,8 @@ public class UsuarioController implements UsuarioControllerOpenApi {
         return usuarioModelAssembler.toModel(usuarioAtual);
     }
 
+    @CheckSecurity.UsuariosGruposPermissoes.PodeAlterarPropriaSenha
+    @Override
     @PutMapping("/{usuarioId}/senha")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void alterarSenha(@PathVariable Long usuarioId, @RequestBody @Valid SenhaInput senha) {

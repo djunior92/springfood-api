@@ -4,6 +4,7 @@ import com.course.springfood.api.v1.SpringLinks;
 import com.course.springfood.api.v1.assembler.PermissaoModelAssembler;
 import com.course.springfood.api.v1.model.PermissaoModel;
 import com.course.springfood.api.v1.openapi.controller.GrupoPermissaoControllerOpenApi;
+import com.course.springfood.core.security.CheckSecurity;
 import com.course.springfood.domain.model.Grupo;
 import com.course.springfood.domain.service.CadastroGrupoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/v1/grupos/{grupoId}/permissoes")
+@RequestMapping(path = "/v1/grupos/{grupoId}/permissoes",
+        produces = MediaType.APPLICATION_JSON_VALUE)
 public class GrupoPermissaoController implements GrupoPermissaoControllerOpenApi {
 
     @Autowired
@@ -26,8 +28,9 @@ public class GrupoPermissaoController implements GrupoPermissaoControllerOpenApi
     @Autowired
     private SpringLinks springLinks;
 
+    @CheckSecurity.UsuariosGruposPermissoes.PodeConsultar
     @Override
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping
     public CollectionModel<PermissaoModel> listar(@PathVariable Long grupoId) {
         Grupo grupo = cadastroGrupo.buscarOuFalhar(grupoId);
 
@@ -45,6 +48,7 @@ public class GrupoPermissaoController implements GrupoPermissaoControllerOpenApi
         return permissoesModel;
     }
 
+    @CheckSecurity.UsuariosGruposPermissoes.PodeEditar
     @Override
     @DeleteMapping("/{permissaoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -54,6 +58,7 @@ public class GrupoPermissaoController implements GrupoPermissaoControllerOpenApi
         return ResponseEntity.noContent().build();
     }
 
+    @CheckSecurity.UsuariosGruposPermissoes.PodeEditar
     @Override
     @PutMapping("/{permissaoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
