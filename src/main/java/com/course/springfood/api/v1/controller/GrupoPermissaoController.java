@@ -5,6 +5,7 @@ import com.course.springfood.api.v1.assembler.PermissaoModelAssembler;
 import com.course.springfood.api.v1.model.PermissaoModel;
 import com.course.springfood.api.v1.openapi.controller.GrupoPermissaoControllerOpenApi;
 import com.course.springfood.core.security.CheckSecurity;
+import com.course.springfood.core.security.SpringSecurity;
 import com.course.springfood.domain.model.Grupo;
 import com.course.springfood.domain.service.CadastroGrupoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class GrupoPermissaoController implements GrupoPermissaoControllerOpenApi
     @Autowired
     private SpringLinks springLinks;
 
+    @Autowired
+    private SpringSecurity springSecurity;
+
     @CheckSecurity.UsuariosGruposPermissoes.PodeConsultar
     @Override
     @GetMapping
@@ -36,14 +40,18 @@ public class GrupoPermissaoController implements GrupoPermissaoControllerOpenApi
 
         CollectionModel<PermissaoModel> permissoesModel
                 = permissaoModelAssembler.toCollectionModel(grupo.getPermissoes())
-                .removeLinks()
-                .add(springLinks.linkToGrupoPermissoes(grupoId))
-                .add(springLinks.linkToGrupoPermissaoAssociacao(grupoId, "associar"));
+                .removeLinks();
 
-        permissoesModel.getContent().forEach(permissaoModel -> {
-            permissaoModel.add(springLinks.linkToGrupoPermissaoDesassociacao(
-                    grupoId, permissaoModel.getId(), "desassociar"));
-        });
+        permissoesModel.add(springLinks.linkToGrupoPermissoes(grupoId));
+
+        if (springSecurity.podeEditarUsuariosGruposPermissoes()) {
+            permissoesModel.add(springLinks.linkToGrupoPermissaoAssociacao(grupoId, "associar"));
+
+            permissoesModel.getContent().forEach(permissaoModel -> {
+                permissaoModel.add(springLinks.linkToGrupoPermissaoDesassociacao(
+                        grupoId, permissaoModel.getId(), "desassociar"));
+            });
+        }
 
         return permissoesModel;
     }

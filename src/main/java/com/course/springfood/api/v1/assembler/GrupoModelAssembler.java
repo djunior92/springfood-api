@@ -3,6 +3,7 @@ package com.course.springfood.api.v1.assembler;
 import com.course.springfood.api.v1.SpringLinks;
 import com.course.springfood.api.v1.controller.GrupoController;
 import com.course.springfood.api.v1.model.GrupoModel;
+import com.course.springfood.core.security.SpringSecurity;
 import com.course.springfood.domain.model.Grupo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class GrupoModelAssembler
     @Autowired
     private SpringLinks springLinks;
 
+    @Autowired
+    private SpringSecurity springSecurity;
+
     public GrupoModelAssembler() {
         super(GrupoController.class, GrupoModel.class);
     }
@@ -29,17 +33,24 @@ public class GrupoModelAssembler
         GrupoModel grupoModel = createModelWithId(grupo.getId(), grupo);
         modelMapper.map(grupo, grupoModel);
 
-        grupoModel.add(springLinks.linkToGrupos("grupos"));
+        if (springSecurity.podeConsultarUsuariosGruposPermissoes()) {
+            grupoModel.add(springLinks.linkToGrupos("grupos"));
 
-        grupoModel.add(springLinks.linkToGrupoPermissoes(grupo.getId(), "permissoes"));
+            grupoModel.add(springLinks.linkToGrupoPermissoes(grupo.getId(), "permissoes"));
+        }
 
         return grupoModel;
     }
 
     @Override
     public CollectionModel<GrupoModel> toCollectionModel(Iterable<? extends Grupo> entities) {
-        return super.toCollectionModel(entities)
-                .add(springLinks.linkToGrupos());
+        CollectionModel<GrupoModel> collectionModel = super.toCollectionModel(entities);
+
+        if (springSecurity.podeConsultarUsuariosGruposPermissoes()) {
+            collectionModel.add(springLinks.linkToGrupos());
+        }
+
+        return collectionModel;
     }
 
 }

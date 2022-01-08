@@ -1,13 +1,13 @@
 package com.course.springfood.core.security;
 
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 public @interface CheckSecurity {
 
@@ -18,7 +18,7 @@ public @interface CheckSecurity {
         @Target(METHOD)
         public @interface PodeEditar { }
 
-        @PreAuthorize("hasAuthority('SCOPE_READ') and isAuthenticated()")
+        @PreAuthorize("@springSecurity.podeConsultarCozinhas()")
         @Retention(RUNTIME)
         @Target(METHOD)
         public @interface PodeConsultar { }
@@ -27,19 +27,17 @@ public @interface CheckSecurity {
 
     public @interface Restaurantes {
 
-        @PreAuthorize("hasAuthority('SCOPE_WRITE') and hasAuthority('EDITAR_RESTAURANTES')")
+        @PreAuthorize("@springSecurity.podeGerenciarCadastroRestaurantes()")
         @Retention(RUNTIME)
         @Target(METHOD)
         public @interface PodeGerenciarCadastro { }
 
-        @PreAuthorize("hasAuthority('SCOPE_WRITE') and "
-                + "(hasAuthority('EDITAR_RESTAURANTES') or "
-                + "@springSecurity.gerenciaRestaurante(#restauranteId))")
+        @PreAuthorize("@springSecurity.podeGerenciarFuncionamentoRestaurantes(#restauranteId)")
         @Retention(RUNTIME)
         @Target(METHOD)
         public @interface PodeGerenciarFuncionamento { }
 
-        @PreAuthorize("hasAuthority('SCOPE_READ') and isAuthenticated()")
+        @PreAuthorize("@springSecurity.podeConsultarRestaurantes()")
         @Retention(RUNTIME)
         @Target(METHOD)
         public @interface PodeConsultar { }
@@ -50,15 +48,13 @@ public @interface CheckSecurity {
 
         @PreAuthorize("hasAuthority('SCOPE_READ') and isAuthenticated()")
         @PostAuthorize("hasAuthority('CONSULTAR_PEDIDOS') or "
-                + "@springSecurity.getUsuarioId() == returnObject.cliente.id or "
+                + "@springSecurity.usuarioAutenticadoIgual(returnObject.cliente.id) or "
                 + "@springSecurity.gerenciaRestaurante(returnObject.restaurante.id)")
         @Retention(RUNTIME)
         @Target(METHOD)
         public @interface PodeBuscar { }
 
-        @PreAuthorize("hasAuthority('SCOPE_READ') and (hasAuthority('CONSULTAR_PEDIDOS') or "
-                + "@springSecurity.getUsuarioId() == #filtro.clienteId or"
-                + "@springSecurity.gerenciaRestaurante(#filtro.restauranteId))")
+        @PreAuthorize("@springSecurity.podePesquisarPedidos(#filtro.clienteId, #filtro.restauranteId)")
         @Retention(RUNTIME)
         @Target(METHOD)
         public @interface PodePesquisar { }
@@ -68,8 +64,7 @@ public @interface CheckSecurity {
         @Target(METHOD)
         public @interface PodeCriar { }
 
-        @PreAuthorize("hasAuthority('SCOPE_WRITE') and (hasAuthority('GERENCIAR_PEDIDOS') or "
-                + "@springSecurity.gerenciaRestauranteDoPedido(#codigoPedido))")
+        @PreAuthorize("@springSecurity.podeGerenciarPedidos(#codigoPedido)")
         @Retention(RUNTIME)
         @Target(METHOD)
         public @interface PodeGerenciarPedidos { }
@@ -83,7 +78,7 @@ public @interface CheckSecurity {
         @Target(METHOD)
         public @interface PodeEditar { }
 
-        @PreAuthorize("hasAuthority('SCOPE_READ') and isAuthenticated()")
+        @PreAuthorize("@springSecurity.podeConsultarFormasPagamento()")
         @Retention(RUNTIME)
         @Target(METHOD)
         public @interface PodeConsultar { }
@@ -97,7 +92,7 @@ public @interface CheckSecurity {
         @Target(METHOD)
         public @interface PodeEditar { }
 
-        @PreAuthorize("hasAuthority('SCOPE_READ') and isAuthenticated()")
+        @PreAuthorize("@springSecurity.podeConsultarCidades()")
         @Retention(RUNTIME)
         @Target(METHOD)
         public @interface PodeConsultar { }
@@ -111,7 +106,7 @@ public @interface CheckSecurity {
         @Target(METHOD)
         public @interface PodeEditar { }
 
-        @PreAuthorize("hasAuthority('SCOPE_READ') and isAuthenticated()")
+        @PreAuthorize("@springSecurity.podeConsultarEstados()")
         @Retention(RUNTIME)
         @Target(METHOD)
         public @interface PodeConsultar { }
@@ -121,24 +116,24 @@ public @interface CheckSecurity {
     public @interface UsuariosGruposPermissoes {
 
         @PreAuthorize("hasAuthority('SCOPE_WRITE') and "
-                + "@springSecurity.getUsuarioId() == #usuarioId")
+                + "@springSecurity.usuarioAutenticadoIgual(#usuarioId)")
         @Retention(RUNTIME)
         @Target(METHOD)
         public @interface PodeAlterarPropriaSenha { }
 
         @PreAuthorize("hasAuthority('SCOPE_WRITE') and (hasAuthority('EDITAR_USUARIOS_GRUPOS_PERMISSOES') or "
-                + "@springSecurity.getUsuarioId() == #usuarioId)")
+                + "@springSecurity.usuarioAutenticadoIgual(#usuarioId))")
         @Retention(RUNTIME)
         @Target(METHOD)
         public @interface PodeAlterarUsuario { }
 
-        @PreAuthorize("hasAuthority('SCOPE_WRITE') and hasAuthority('EDITAR_USUARIOS_GRUPOS_PERMISSOES')")
+        @PreAuthorize("@springSecurity.podeEditarUsuariosGruposPermissoes()")
         @Retention(RUNTIME)
         @Target(METHOD)
         public @interface PodeEditar { }
 
 
-        @PreAuthorize("hasAuthority('SCOPE_READ') and hasAuthority('CONSULTAR_USUARIOS_GRUPOS_PERMISSOES')")
+        @PreAuthorize("@springSecurity.podeConsultarUsuariosGruposPermissoes()")
         @Retention(RUNTIME)
         @Target(METHOD)
         public @interface PodeConsultar { }
@@ -147,8 +142,7 @@ public @interface CheckSecurity {
 
     public @interface Estatisticas {
 
-        @PreAuthorize("hasAuthority('SCOPE_READ') and "
-                + "hasAuthority('GERAR_RELATORIOS')")
+        @PreAuthorize("@springSecurity.podeConsultarEstatisticas()")
         @Retention(RUNTIME)
         @Target(METHOD)
         public @interface PodeConsultar { }

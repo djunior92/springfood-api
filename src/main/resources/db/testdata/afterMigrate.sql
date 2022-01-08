@@ -16,6 +16,7 @@ delete from usuario_grupo;
 delete from pedido;
 delete from item_pedido;
 delete from foto_produto;
+delete from oauth_client_details;
 
 set foreign_key_checks = 1;
 
@@ -131,3 +132,26 @@ values (5, '331ed7fe-4a8b-11ec-81d3-0242ac130003', 1, 3, 2, 1, '15800-000', 'Rua
 
 insert into item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
 values (6, 5, 3, 1, 90.5, 90.5, null);
+
+
+
+insert into oauth_client_details (
+  client_id, resource_ids, client_secret, scope, authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity, refresh_token_validity, autoapprove
+)
+values (
+  'springfood-web', null, '$2y$12$w3igMjsfS5XoAYuowoH3C.54vRFWlcXSHLjX7MwF990Kc2KKKh72e', 'READ,WRITE', 'password', null, null, 60 * 60 * 6, 60 * 24 * 60 * 60, null
+);
+
+insert into oauth_client_details (
+  client_id, resource_ids, client_secret, scope, authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity, refresh_token_validity, autoapprove
+)
+values (
+  'foodanalytics', null, '$2y$12$fahbH37S2pyk1RPuIHKP.earzFmgAJJGo26rE.59vf4wwiiTKHnzO', 'READ,WRITE', 'authorization_code', 'http://localhost:8082', null, null, null, null
+);
+
+insert into oauth_client_details (
+  client_id, resource_ids, client_secret, scope, authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity, refresh_token_validity, autoapprove
+)
+values (
+  'faturamento', null, '$2y$12$fHixriC7yXX/i1/CmpnGH.RFyK/l5YapLCFOEbIktONjE8ZDykSnu', 'READ,WRITE', 'client_credentials', null, 'CONSULTAR_PEDIDOS,GERAR_RELATORIOS', null, null, null
+);

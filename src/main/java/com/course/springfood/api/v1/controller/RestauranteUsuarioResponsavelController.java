@@ -5,6 +5,7 @@ import com.course.springfood.api.v1.assembler.UsuarioModelAssembler;
 import com.course.springfood.api.v1.model.UsuarioModel;
 import com.course.springfood.api.v1.openapi.controller.RestauranteUsuarioResponsavelControllerOpenApi;
 import com.course.springfood.core.security.CheckSecurity;
+import com.course.springfood.core.security.SpringSecurity;
 import com.course.springfood.domain.model.Restaurante;
 import com.course.springfood.domain.service.CadastroRestauranteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class RestauranteUsuarioResponsavelController implements RestauranteUsuar
     @Autowired
     private SpringLinks springLinks;
 
+    @Autowired
+    private SpringSecurity springSecurity;
+
     @CheckSecurity.Restaurantes.PodeGerenciarCadastro
     @Override
     @GetMapping
@@ -36,14 +40,18 @@ public class RestauranteUsuarioResponsavelController implements RestauranteUsuar
 
         CollectionModel<UsuarioModel> usuariosModel = usuarioModelAssembler
                 .toCollectionModel(restaurante.getResponsaveis())
-                .removeLinks()
-                .add(springLinks.linkToRestauranteResponsaveis(restauranteId))
-                .add(springLinks.linkToRestauranteResponsavelAssociacao(restauranteId, "associar"));
+                .removeLinks();
 
-        usuariosModel.getContent().stream().forEach(usuarioModel -> {
-            usuarioModel.add(springLinks.linkToRestauranteResponsavelDesassociacao(
-                    restauranteId, usuarioModel.getId(), "desassociar"));
-        });
+        usuariosModel.add(springLinks.linkToRestauranteResponsaveis(restauranteId));
+
+        if (springSecurity.podeGerenciarCadastroRestaurantes()) {
+            usuariosModel.add(springLinks.linkToRestauranteResponsavelAssociacao(restauranteId, "associar"));
+
+            usuariosModel.getContent().stream().forEach(usuarioModel -> {
+                usuarioModel.add(springLinks.linkToRestauranteResponsavelDesassociacao(
+                        restauranteId, usuarioModel.getId(), "desassociar"));
+            });
+        }
 
         return usuariosModel;
     }

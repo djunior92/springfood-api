@@ -5,6 +5,7 @@ import com.course.springfood.api.v1.assembler.GrupoModelAssembler;
 import com.course.springfood.api.v1.model.GrupoModel;
 import com.course.springfood.api.v1.openapi.controller.UsuarioGrupoControllerOpenApi;
 import com.course.springfood.core.security.CheckSecurity;
+import com.course.springfood.core.security.SpringSecurity;
 import com.course.springfood.domain.model.Usuario;
 import com.course.springfood.domain.service.CadastroUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class UsuarioGrupoController implements UsuarioGrupoControllerOpenApi {
     @Autowired
     private SpringLinks springLinks;
 
+    @Autowired
+    private SpringSecurity springSecurity;
+
     @CheckSecurity.UsuariosGruposPermissoes.PodeConsultar
     @Override
     @GetMapping
@@ -35,13 +39,16 @@ public class UsuarioGrupoController implements UsuarioGrupoControllerOpenApi {
         Usuario usuario = cadastroUsuario.buscarOuFalhar(usuarioId);
 
         CollectionModel<GrupoModel> gruposModel = grupoModelAssembler.toCollectionModel(usuario.getGrupos())
-                .removeLinks()
-                .add(springLinks.linkToUsuarioGrupoAssociacao(usuarioId, "associar"));
+                .removeLinks();
 
-        gruposModel.getContent().forEach(grupoModel -> {
-            grupoModel.add(springLinks.linkToUsuarioGrupoDesassociacao(
-                    usuarioId, grupoModel.getId(), "desassociar"));
-        });
+        if (springSecurity.podeEditarUsuariosGruposPermissoes()) {
+            gruposModel.add(springLinks.linkToUsuarioGrupoAssociacao(usuarioId, "associar"));
+
+            gruposModel.getContent().forEach(grupoModel -> {
+                grupoModel.add(springLinks.linkToUsuarioGrupoDesassociacao(
+                        usuarioId, grupoModel.getId(), "desassociar"));
+            });
+        }
 
         return gruposModel;
     }
