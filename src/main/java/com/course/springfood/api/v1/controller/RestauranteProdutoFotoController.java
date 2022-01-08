@@ -4,6 +4,7 @@ import com.course.springfood.api.v1.assembler.FotoProdutoModelAssembler;
 import com.course.springfood.api.v1.model.FotoProdutoModel;
 import com.course.springfood.api.v1.model.input.FotoProdutoInput;
 import com.course.springfood.api.v1.openapi.controller.RestauranteProdutoFotoControllerOpenApi;
+import com.course.springfood.core.security.CheckSecurity;
 import com.course.springfood.domain.exception.EntidadeNaoEncontradaException;
 import com.course.springfood.domain.model.FotoProduto;
 import com.course.springfood.domain.model.Produto;
@@ -26,7 +27,8 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/v1/restaurantes/{restauranteId}/produtos/{produtoId}/foto")
+@RequestMapping(path = "/v1/restaurantes/{restauranteId}/produtos/{produtoId}/foto",
+        produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestauranteProdutoFotoController implements RestauranteProdutoFotoControllerOpenApi {
 
     @Autowired
@@ -41,6 +43,7 @@ public class RestauranteProdutoFotoController implements RestauranteProdutoFotoC
     @Autowired
     private FotoProdutoModelAssembler fotoProdutoModelAssembler;
 
+    @CheckSecurity.Restaurantes.PodeGerenciarFuncionamento
     @Override
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public FotoProdutoModel atualizarFoto(@PathVariable Long restauranteId,
@@ -62,6 +65,7 @@ public class RestauranteProdutoFotoController implements RestauranteProdutoFotoC
         return fotoProdutoModelAssembler.toModel(fotoSalva);
     }
 
+    @CheckSecurity.Restaurantes.PodeGerenciarFuncionamento
     @Override
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -70,8 +74,9 @@ public class RestauranteProdutoFotoController implements RestauranteProdutoFotoC
         catalogoFotoProduto.excluir(restauranteId, produtoId);
     }
 
+    @CheckSecurity.Restaurantes.PodeConsultar
     @Override
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping
     public FotoProdutoModel buscar(@PathVariable Long restauranteId,
                                    @PathVariable Long produtoId) {
         FotoProduto fotoProduto = catalogoFotoProduto.buscarOuFalhar(restauranteId, produtoId);
@@ -79,6 +84,7 @@ public class RestauranteProdutoFotoController implements RestauranteProdutoFotoC
         return fotoProdutoModelAssembler.toModel(fotoProduto);
     }
 
+    // As fotos dos produtos ficarão públicas (não precisa de autorização para acessá-las)
     @Override
     @GetMapping(produces = MediaType.ALL_VALUE)
     public ResponseEntity<?> servir(@PathVariable Long restauranteId,

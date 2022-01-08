@@ -9,6 +9,7 @@ import com.course.springfood.api.v1.model.input.PedidoInput;
 import com.course.springfood.api.v1.openapi.controller.PedidoControllerOpenApi;
 import com.course.springfood.core.data.PageWrapper;
 import com.course.springfood.core.data.PageableTranslator;
+import com.course.springfood.core.security.CheckSecurity;
 import com.course.springfood.core.security.SpringSecurity;
 import com.course.springfood.domain.exception.EntidadeNaoEncontradaException;
 import com.course.springfood.domain.exception.NegocioException;
@@ -32,8 +33,8 @@ import javax.validation.Valid;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/v1/pedidos")
-public class PedidoController implements PedidoControllerOpenApi{
+@RequestMapping(path = "/v1/pedidos", produces = MediaType.APPLICATION_JSON_VALUE)
+public class PedidoController implements PedidoControllerOpenApi {
 
     @Autowired
     private PedidoRepository pedidoRepository;
@@ -57,7 +58,7 @@ public class PedidoController implements PedidoControllerOpenApi{
     private SpringSecurity springSecurity;
 
     @Override
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping
     public PagedModel<PedidoResumoModel> pesquisar(PedidoFilter filtro,
                                                    @PageableDefault(size = 10) Pageable pageable) {
         Pageable pageableTraduzido = traduzirPageable(pageable);
@@ -88,8 +89,9 @@ public class PedidoController implements PedidoControllerOpenApi{
         }
     }
 
+    @CheckSecurity.Pedidos.PodeBuscar
     @Override
-    @GetMapping(value = "/{codigoPedido}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/{codigoPedido}")
     public PedidoModel buscar(@PathVariable String codigoPedido) {
         Pedido pedido = emissaoPedido.buscarOuFalhar(codigoPedido);
 
@@ -103,7 +105,7 @@ public class PedidoController implements PedidoControllerOpenApi{
                 "taxaFrete", "taxaFrete",
                 "valorTotal", "valorTotal",
                 "dataCriacao", "dataCriacao",
-                "nomerestaurante", "restaurante.nome",
+                "restaurante.nome", "restaurante.nome",
                 "restaurante.id", "restaurante.id",
                 "cliente.id", "cliente.id",
                 "cliente.nome", "cliente.nome"
