@@ -3,6 +3,7 @@ package com.course.springfood.api.v1.assembler;
 import com.course.springfood.api.v1.SpringLinks;
 import com.course.springfood.api.v1.controller.CozinhaController;
 import com.course.springfood.api.v1.model.CozinhaModel;
+import com.course.springfood.core.security.SpringSecurity;
 import com.course.springfood.domain.model.Cozinha;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class CozinhaModelAssembler
     @Autowired
     private SpringLinks springLinks;
 
+    @Autowired
+    private SpringSecurity springSecurity;
+
     public CozinhaModelAssembler() {
         super(CozinhaController.class, CozinhaModel.class);
     }
@@ -28,7 +32,9 @@ public class CozinhaModelAssembler
         CozinhaModel cozinhaModel = createModelWithId(cozinha.getId(), cozinha);
         modelMapper.map(cozinha, cozinhaModel);
 
-        cozinhaModel.add(springLinks.linkToCozinhas("cozinhas"));
+        if (springSecurity.podeConsultarCozinhas()) {
+            cozinhaModel.add(springLinks.linkToCozinhas("cozinhas"));
+        }
 
         return cozinhaModel;
     }

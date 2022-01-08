@@ -3,6 +3,7 @@ package com.course.springfood.api.v1.assembler;
 import com.course.springfood.api.v1.SpringLinks;
 import com.course.springfood.api.v1.controller.RestauranteProdutoController;
 import com.course.springfood.api.v1.model.ProdutoModel;
+import com.course.springfood.core.security.SpringSecurity;
 import com.course.springfood.domain.model.Produto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class ProdutoModelAssembler
     @Autowired
     private SpringLinks springLinks;
 
+    @Autowired
+    private SpringSecurity springSecurity;
+
     public ProdutoModelAssembler() {
         super(RestauranteProdutoController.class, ProdutoModel.class);
     }
@@ -30,10 +34,13 @@ public class ProdutoModelAssembler
 
         modelMapper.map(produto, produtoModel);
 
-        produtoModel.add(springLinks.linkToProdutos(produto.getRestaurante().getId(), "produtos"));
+        // Quem pode consultar restaurantes, também pode consultar os produtos e fotos
+        if (springSecurity.podeConsultarRestaurantes()) {
+            produtoModel.add(springLinks.linkToProdutos(produto.getRestaurante().getId(), "produtos"));
 
-        produtoModel.add(springLinks.linkToFotoProduto(
-                produto.getRestaurante().getId(), produto.getId(), "foto"));
+            produtoModel.add(springLinks.linkToFotoProduto(
+                    produto.getRestaurante().getId(), produto.getId(), "foto"));
+        }
 
         return produtoModel;
     }

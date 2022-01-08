@@ -5,6 +5,7 @@ import com.course.springfood.api.v1.assembler.FormaPagamentoModelAssembler;
 import com.course.springfood.api.v1.model.FormaPagamentoModel;
 import com.course.springfood.api.v1.openapi.controller.RestauranteFormaPagamentoControllerOpenApi;
 import com.course.springfood.core.security.CheckSecurity;
+import com.course.springfood.core.security.SpringSecurity;
 import com.course.springfood.domain.model.Restaurante;
 import com.course.springfood.domain.service.CadastroRestauranteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class RestauranteFormaPagamentoController implements RestauranteFormaPaga
     @Autowired
     private SpringLinks springLinks;
 
+    @Autowired
+    private SpringSecurity springSecurity;
+
     @CheckSecurity.Restaurantes.PodeConsultar
     @Override
     @GetMapping
@@ -36,14 +40,18 @@ public class RestauranteFormaPagamentoController implements RestauranteFormaPaga
 
         CollectionModel<FormaPagamentoModel> formasPagamentoModel
                 = formaPagamentoModelAssembler.toCollectionModel(restaurante.getFormasPagamento())
-                .removeLinks()
-                .add(springLinks.linkToRestauranteFormasPagamento(restauranteId))
-                .add(springLinks.linkToRestauranteFormaPagamentoAssociacao(restauranteId, "associar"));
+                .removeLinks();
 
-        formasPagamentoModel.getContent().forEach(formaPagamentoModel -> {
-            formaPagamentoModel.add(springLinks.linkToRestauranteFormaPagamentoDesassociacao(
-                    restauranteId, formaPagamentoModel.getId(), "desassociar"));
-        });
+        formasPagamentoModel.add(springLinks.linkToRestauranteFormasPagamento(restauranteId));
+
+        if (springSecurity.podeGerenciarFuncionamentoRestaurantes(restauranteId)) {
+            formasPagamentoModel.add(springLinks.linkToRestauranteFormaPagamentoAssociacao(restauranteId, "associar"));
+
+            formasPagamentoModel.getContent().forEach(formaPagamentoModel -> {
+                formaPagamentoModel.add(springLinks.linkToRestauranteFormaPagamentoDesassociacao(
+                        restauranteId, formaPagamentoModel.getId(), "desassociar"));
+            });
+        }
 
         return formasPagamentoModel;
     }

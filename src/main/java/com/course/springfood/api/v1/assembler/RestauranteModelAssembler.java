@@ -3,6 +3,7 @@ package com.course.springfood.api.v1.assembler;
 import com.course.springfood.api.v1.SpringLinks;
 import com.course.springfood.api.v1.controller.RestauranteController;
 import com.course.springfood.api.v1.model.RestauranteModel;
+import com.course.springfood.core.security.SpringSecurity;
 import com.course.springfood.domain.model.Restaurante;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class RestauranteModelAssembler
     @Autowired
     private SpringLinks springLinks;
 
+    @Autowired
+    private SpringSecurity springSecurity;
+
     public RestauranteModelAssembler() {
         super(RestauranteController.class, RestauranteModel.class);
     }
@@ -29,52 +33,73 @@ public class RestauranteModelAssembler
         RestauranteModel restauranteModel = createModelWithId(restaurante.getId(), restaurante);
         modelMapper.map(restaurante, restauranteModel);
 
-        restauranteModel.add(springLinks.linkToRestaurantes("restaurantes"));
-
-        if (restaurante.ativacaoPermitida()) {
-            restauranteModel.add(
-                    springLinks.linkToRestauranteAtivacao(restaurante.getId(), "ativar"));
+        if (springSecurity.podeConsultarRestaurantes()) {
+            restauranteModel.add(springLinks.linkToRestaurantes("restaurantes"));
         }
 
-        if (restaurante.inativacaoPermitida()) {
-            restauranteModel.add(
-                    springLinks.linkToRestauranteInativacao(restaurante.getId(), "inativar"));
+        if (springSecurity.podeGerenciarCadastroRestaurantes()) {
+            if (restaurante.ativacaoPermitida()) {
+                restauranteModel.add(
+                        springLinks.linkToRestauranteAtivacao(restaurante.getId(), "ativar"));
+            }
+
+            if (restaurante.inativacaoPermitida()) {
+                restauranteModel.add(
+                        springLinks.linkToRestauranteInativacao(restaurante.getId(), "inativar"));
+            }
         }
 
-        if (restaurante.aberturaPermitida()) {
-            restauranteModel.add(
-                    springLinks.linkToRestauranteAbertura(restaurante.getId(), "abrir"));
+        if (springSecurity.podeGerenciarFuncionamentoRestaurantes(restaurante.getId())) {
+            if (restaurante.aberturaPermitida()) {
+                restauranteModel.add(
+                        springLinks.linkToRestauranteAbertura(restaurante.getId(), "abrir"));
+            }
+
+            if (restaurante.fechamentoPermitido()) {
+                restauranteModel.add(
+                        springLinks.linkToRestauranteFechamento(restaurante.getId(), "fechar"));
+            }
         }
 
-        if (restaurante.fechamentoPermitido()) {
-            restauranteModel.add(
-                    springLinks.linkToRestauranteFechamento(restaurante.getId(), "fechar"));
+        if (springSecurity.podeConsultarRestaurantes()) {
+            restauranteModel.add(springLinks.linkToProdutos(restaurante.getId(), "produtos"));
         }
 
-        restauranteModel.add(springLinks.linkToProdutos(restaurante.getId(), "produtos"));
-
-        restauranteModel.getCozinha().add(
-                springLinks.linkToCozinha(restaurante.getCozinha().getId()));
-
-        if (restauranteModel.getEndereco() != null
-                && restauranteModel.getEndereco().getCidade() != null) {
-            restauranteModel.getEndereco().getCidade().add(
-                    springLinks.linkToCidade(restaurante.getEndereco().getCidade().getId()));
+        if (springSecurity.podeConsultarCozinhas()) {
+            restauranteModel.getCozinha().add(
+                    springLinks.linkToCozinha(restaurante.getCozinha().getId()));
         }
 
-        restauranteModel.add(springLinks.linkToRestauranteFormasPagamento(restaurante.getId(),
-                "formas-pagamento"));
+        if (springSecurity.podeConsultarCidades()) {
+            if (restauranteModel.getEndereco() != null
+                    && restauranteModel.getEndereco().getCidade() != null) {
+                restauranteModel.getEndereco().getCidade().add(
+                        springLinks.linkToCidade(restaurante.getEndereco().getCidade().getId()));
+            }
+        }
 
-        restauranteModel.add(springLinks.linkToRestauranteResponsaveis(restaurante.getId(),
-                "responsaveis"));
+        if (springSecurity.podeConsultarRestaurantes()) {
+            restauranteModel.add(springLinks.linkToRestauranteFormasPagamento(restaurante.getId(),
+                    "formas-pagamento"));
+        }
+
+        if (springSecurity.podeGerenciarCadastroRestaurantes()) {
+            restauranteModel.add(springLinks.linkToRestauranteResponsaveis(restaurante.getId(),
+                    "responsaveis"));
+        }
 
         return restauranteModel;
     }
 
     @Override
     public CollectionModel<RestauranteModel> toCollectionModel(Iterable<? extends Restaurante> entities) {
-        return super.toCollectionModel(entities)
-                .add(springLinks.linkToRestaurantes());
+        CollectionModel<RestauranteModel> collectionModel = super.toCollectionModel(entities);
+
+        if (springSecurity.podeConsultarRestaurantes()) {
+            collectionModel.add(springLinks.linkToRestaurantes());
+        }
+
+        return collectionModel;
     }
 
 }

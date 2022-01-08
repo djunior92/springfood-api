@@ -3,6 +3,7 @@ package com.course.springfood.api.v1.assembler;
 import com.course.springfood.api.v1.SpringLinks;
 import com.course.springfood.api.v1.controller.EstadoController;
 import com.course.springfood.api.v1.model.EstadoModel;
+import com.course.springfood.core.security.SpringSecurity;
 import com.course.springfood.domain.model.Estado;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class EstadoModelAssembler
     @Autowired
     private SpringLinks springLinks;
 
+    @Autowired
+    private SpringSecurity springSecurity;
+
     public EstadoModelAssembler() {
         super(EstadoController.class, EstadoModel.class);
     }
@@ -29,15 +33,22 @@ public class EstadoModelAssembler
         EstadoModel estadoModel = createModelWithId(estado.getId(), estado);
         modelMapper.map(estado, estadoModel);
 
-        estadoModel.add(springLinks.linkToEstados("estados"));
+        if (springSecurity.podeConsultarEstados()) {
+            estadoModel.add(springLinks.linkToEstados("estados"));
+        }
 
         return estadoModel;
     }
 
     @Override
     public CollectionModel<EstadoModel> toCollectionModel(Iterable<? extends Estado> entities) {
-        return super.toCollectionModel(entities)
-                .add(springLinks.linkToEstados());
+        CollectionModel<EstadoModel> collectionModel = super.toCollectionModel(entities);
+
+        if (springSecurity.podeConsultarEstados()) {
+            collectionModel.add(springLinks.linkToEstados());
+        }
+
+        return collectionModel;
     }
 
 }

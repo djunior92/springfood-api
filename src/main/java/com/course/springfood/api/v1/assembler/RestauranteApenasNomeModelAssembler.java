@@ -3,6 +3,7 @@ package com.course.springfood.api.v1.assembler;
 import com.course.springfood.api.v1.SpringLinks;
 import com.course.springfood.api.v1.controller.RestauranteController;
 import com.course.springfood.api.v1.model.RestauranteApenasNomeModel;
+import com.course.springfood.core.security.SpringSecurity;
 import com.course.springfood.domain.model.Restaurante;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class RestauranteApenasNomeModelAssembler
     @Autowired
     private SpringLinks springLinks;
 
+    @Autowired
+    private SpringSecurity springSecurity;
+
     public RestauranteApenasNomeModelAssembler() {
         super(RestauranteController.class, RestauranteApenasNomeModel.class);
     }
@@ -31,15 +35,22 @@ public class RestauranteApenasNomeModelAssembler
 
         modelMapper.map(restaurante, restauranteModel);
 
-        restauranteModel.add(springLinks.linkToRestaurantes("restaurantes"));
+        if (springSecurity.podeConsultarRestaurantes()) {
+            restauranteModel.add(springLinks.linkToRestaurantes("restaurantes"));
+        }
 
         return restauranteModel;
     }
 
     @Override
     public CollectionModel<RestauranteApenasNomeModel> toCollectionModel(Iterable<? extends Restaurante> entities) {
-        return super.toCollectionModel(entities)
-                .add(springLinks.linkToRestaurantes());
+        CollectionModel<RestauranteApenasNomeModel> collectionModel = super.toCollectionModel(entities);
+
+        if (springSecurity.podeConsultarRestaurantes()) {
+            collectionModel.add(springLinks.linkToRestaurantes());
+        }
+
+        return collectionModel;
     }
 
 }
