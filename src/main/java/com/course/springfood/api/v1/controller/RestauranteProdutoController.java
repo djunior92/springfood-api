@@ -6,6 +6,7 @@ import com.course.springfood.api.v1.assembler.ProdutoModelAssembler;
 import com.course.springfood.api.v1.model.ProdutoModel;
 import com.course.springfood.api.v1.model.input.ProdutoInput;
 import com.course.springfood.api.v1.openapi.controller.RestauranteProdutoControllerOpenApi;
+import com.course.springfood.core.security.CheckSecurity;
 import com.course.springfood.domain.model.Produto;
 import com.course.springfood.domain.model.Restaurante;
 import com.course.springfood.domain.repository.ProdutoRepository;
@@ -21,7 +22,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/v1/restaurantes/{restauranteId}/produtos")
+@RequestMapping(path = "/v1/restaurantes/{restauranteId}/produtos",
+        produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestauranteProdutoController implements RestauranteProdutoControllerOpenApi {
 
     @Autowired
@@ -42,8 +44,9 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
     @Autowired
     private SpringLinks springLinks;
 
+    @CheckSecurity.Restaurantes.PodeConsultar
     @Override
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping
     public CollectionModel<ProdutoModel> listar(@PathVariable Long restauranteId,
                                                 @RequestParam(required = false, defaultValue = "false") Boolean incluirInativos) {
         Restaurante restaurante = cadastroRestaurante.buscarOuFalhar(restauranteId);
@@ -60,6 +63,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
                 .add(springLinks.linkToProdutos(restauranteId));
     }
 
+    @CheckSecurity.Restaurantes.PodeConsultar
     @Override
     @GetMapping("/{produtoId}")
     public ProdutoModel buscar(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
@@ -68,6 +72,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
         return produtoModelAssembler.toModel(produto);
     }
 
+    @CheckSecurity.Restaurantes.PodeGerenciarFuncionamento
     @Override
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -83,6 +88,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
         return produtoModelAssembler.toModel(produto);
     }
 
+    @CheckSecurity.Restaurantes.PodeGerenciarFuncionamento
     @Override
     @PutMapping("/{produtoId}")
     public ProdutoModel atualizar(@PathVariable Long restauranteId, @PathVariable Long produtoId,
