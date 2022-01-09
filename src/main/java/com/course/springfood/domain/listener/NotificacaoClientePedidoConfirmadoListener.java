@@ -1,13 +1,12 @@
 package com.course.springfood.domain.listener;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.event.TransactionalEventListener;
-
 import com.course.springfood.domain.event.PedidoConfirmadoEvent;
 import com.course.springfood.domain.model.Pedido;
 import com.course.springfood.domain.service.EnvioEmailService;
 import com.course.springfood.domain.service.EnvioEmailService.Mensagem;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 @Component
 public class NotificacaoClientePedidoConfirmadoListener {
@@ -21,7 +20,7 @@ public class NotificacaoClientePedidoConfirmadoListener {
 
         var mensagem = Mensagem.builder()
                 .assunto(pedido.getRestaurante().getNome() + " - Pedido confirmado")
-                .corpo("pedido-confirmado.html")
+                .corpo("emails/pedido-confirmado.html")
                 .variavel("pedido", pedido)
                 .destinatario(pedido.getCliente().getEmail())
                 .build();

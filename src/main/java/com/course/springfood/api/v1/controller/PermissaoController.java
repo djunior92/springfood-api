@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/v1/permissoes", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/v1/permissoes")
 public class PermissaoController implements PermissaoControllerOpenApi {
 
     @Autowired
@@ -27,7 +27,7 @@ public class PermissaoController implements PermissaoControllerOpenApi {
 
     @CheckSecurity.UsuariosGruposPermissoes.PodeConsultar
     @Override
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public CollectionModel<PermissaoModel> listar() {
         List<Permissao> todasPermissoes = permissaoRepository.findAll();
 
