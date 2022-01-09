@@ -15,7 +15,7 @@ import com.course.springfood.core.security.CheckSecurity;
 import com.course.springfood.domain.service.FluxoPedidoService;
 
 @RestController
-@RequestMapping(path = "/v1/pedidos/{codigoPedido}", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/v1/pedidos/{codigoPedido}")
 public class FluxoPedidoController implements FluxoPedidoControllerOpenApi {
 
     @Autowired
@@ -23,7 +23,7 @@ public class FluxoPedidoController implements FluxoPedidoControllerOpenApi {
 
     @CheckSecurity.Pedidos.PodeGerenciarPedidos
     @Override
-    @PutMapping("/confirmacao")
+    @PutMapping(value = "/confirmacao")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> confirmar(@PathVariable String codigoPedido) {
         fluxoPedido.confirmar(codigoPedido);
@@ -33,7 +33,7 @@ public class FluxoPedidoController implements FluxoPedidoControllerOpenApi {
 
     @CheckSecurity.Pedidos.PodeGerenciarPedidos
     @Override
-    @PutMapping("/cancelamento")
+    @PutMapping(value = "/cancelamento")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> cancelar(@PathVariable String codigoPedido) {
         fluxoPedido.cancelar(codigoPedido);
@@ -43,7 +43,7 @@ public class FluxoPedidoController implements FluxoPedidoControllerOpenApi {
 
     @CheckSecurity.Pedidos.PodeGerenciarPedidos
     @Override
-    @PutMapping("/entrega")
+    @PutMapping(value = "/entrega")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> entregar(@PathVariable String codigoPedido) {
         fluxoPedido.entregar(codigoPedido);

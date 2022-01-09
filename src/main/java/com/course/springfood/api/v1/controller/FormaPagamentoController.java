@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @RestController
-@RequestMapping(path = "/v1/formas-pagamento", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/v1/formas-pagamento")
 public class FormaPagamentoController implements FormaPagamentoControllerOpenApi {
 
     @Autowired
@@ -42,7 +42,7 @@ public class FormaPagamentoController implements FormaPagamentoControllerOpenApi
 
     @CheckSecurity.FormasPagamento.PodeConsultar
     @Override
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CollectionModel<FormaPagamentoModel>> listar(ServletWebRequest request) {
         ShallowEtagHeaderFilter.disableContentCaching(request.getRequest());
 
@@ -71,7 +71,7 @@ public class FormaPagamentoController implements FormaPagamentoControllerOpenApi
 
     @CheckSecurity.FormasPagamento.PodeConsultar
     @Override
-    @GetMapping("/{formaPagamentoId}")
+    @GetMapping(value = "/{formaPagamentoId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<FormaPagamentoModel> buscar(@PathVariable Long formaPagamentoId,
                                                       ServletWebRequest request) {
 
@@ -102,7 +102,7 @@ public class FormaPagamentoController implements FormaPagamentoControllerOpenApi
 
     @CheckSecurity.FormasPagamento.PodeEditar
     @Override
-    @PostMapping
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public FormaPagamentoModel adicionar(@RequestBody @Valid FormaPagamentoInput formaPagamentoInput) {
         FormaPagamento formaPagamento = formaPagamentoInputDisassembler.toDomainObject(formaPagamentoInput);
@@ -114,7 +114,7 @@ public class FormaPagamentoController implements FormaPagamentoControllerOpenApi
 
     @CheckSecurity.FormasPagamento.PodeEditar
     @Override
-    @PutMapping("/{formaPagamentoId}")
+    @PutMapping(value = "/{formaPagamentoId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public FormaPagamentoModel atualizar(@PathVariable Long formaPagamentoId,
                                          @RequestBody @Valid FormaPagamentoInput formaPagamentoInput) {
         FormaPagamento formaPagamentoAtual = cadastroFormaPagamento.buscarOuFalhar(formaPagamentoId);

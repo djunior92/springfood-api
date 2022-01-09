@@ -28,7 +28,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/v1/restaurantes", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/v1/restaurantes")
 public class RestauranteController implements RestauranteControllerOpenApi {
 
     @Autowired
@@ -51,7 +51,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 
     @CheckSecurity.Restaurantes.PodeConsultar
     @Override
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public CollectionModel<RestauranteBasicoModel> listar() {
         return restauranteBasicoModelAssembler
                 .toCollectionModel(restauranteRepository.findAll());
@@ -59,7 +59,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 
     @CheckSecurity.Restaurantes.PodeConsultar
     @Override
-    @GetMapping(params = "projecao=apenas-nome")
+    @GetMapping(params = "projecao=apenas-nome", produces = MediaType.APPLICATION_JSON_VALUE)
     public CollectionModel<RestauranteApenasNomeModel> listarApenasNomes() {
         return restauranteApenasNomeModelAssembler
                 .toCollectionModel(restauranteRepository.findAll());
@@ -67,7 +67,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 
     @CheckSecurity.Restaurantes.PodeConsultar
     @Override
-    @GetMapping("/{restauranteId}")
+    @GetMapping(value = "/{restauranteId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public RestauranteModel buscar(@PathVariable Long restauranteId) {
         Restaurante restaurante = cadastroRestaurante.buscarOuFalhar(restauranteId);
 
@@ -76,7 +76,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 
     @CheckSecurity.Restaurantes.PodeGerenciarCadastro
     @Override
-    @PostMapping
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public RestauranteModel adicionar(@RequestBody @Valid RestauranteInput restauranteInput) {
         try {
@@ -90,7 +90,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 
     @CheckSecurity.Restaurantes.PodeGerenciarCadastro
     @Override
-    @PutMapping("/{restauranteId}")
+    @PutMapping(value = "/{restauranteId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public RestauranteModel atualizar(@PathVariable Long restauranteId,
                                       @RequestBody @Valid RestauranteInput restauranteInput) {
         try {
@@ -106,7 +106,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 
     @CheckSecurity.Restaurantes.PodeGerenciarCadastro
     @Override
-    @PutMapping("/{restauranteId}/ativo")
+    @PutMapping(value = "/{restauranteId}/ativo")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> ativar(@PathVariable Long restauranteId) {
         cadastroRestaurante.ativar(restauranteId);
@@ -126,7 +126,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 
     @CheckSecurity.Restaurantes.PodeGerenciarCadastro
     @Override
-    @PutMapping("/ativacoes")
+    @PutMapping(value = "/ativacoes")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void ativarMultiplos(@RequestBody List<Long> restauranteIds) {
         try {
@@ -150,7 +150,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 
     @CheckSecurity.Restaurantes.PodeGerenciarFuncionamento
     @Override
-    @PutMapping("/{restauranteId}/abertura")
+    @PutMapping(value = "/{restauranteId}/abertura")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> abrir(@PathVariable Long restauranteId) {
         cadastroRestaurante.abrir(restauranteId);
@@ -160,7 +160,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 
     @CheckSecurity.Restaurantes.PodeGerenciarFuncionamento
     @Override
-    @PutMapping("/{restauranteId}/fechamento")
+    @PutMapping(value = "/{restauranteId}/fechamento")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> fechar(@PathVariable Long restauranteId) {
         cadastroRestaurante.fechar(restauranteId);

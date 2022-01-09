@@ -22,8 +22,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/v1/restaurantes/{restauranteId}/produtos",
-        produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/v1/restaurantes/{restauranteId}/produtos")
 public class RestauranteProdutoController implements RestauranteProdutoControllerOpenApi {
 
     @Autowired
@@ -46,7 +45,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
 
     @CheckSecurity.Restaurantes.PodeConsultar
     @Override
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public CollectionModel<ProdutoModel> listar(@PathVariable Long restauranteId,
                                                 @RequestParam(required = false, defaultValue = "false") Boolean incluirInativos) {
         Restaurante restaurante = cadastroRestaurante.buscarOuFalhar(restauranteId);
@@ -65,7 +64,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
 
     @CheckSecurity.Restaurantes.PodeConsultar
     @Override
-    @GetMapping("/{produtoId}")
+    @GetMapping(value = "/{produtoId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ProdutoModel buscar(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
         Produto produto = cadastroProduto.buscarOuFalhar(restauranteId, produtoId);
 
@@ -74,7 +73,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
 
     @CheckSecurity.Restaurantes.PodeGerenciarFuncionamento
     @Override
-    @PostMapping
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ProdutoModel adicionar(@PathVariable Long restauranteId,
                                   @RequestBody @Valid ProdutoInput produtoInput) {
@@ -90,7 +89,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
 
     @CheckSecurity.Restaurantes.PodeGerenciarFuncionamento
     @Override
-    @PutMapping("/{produtoId}")
+    @PutMapping(value = "/{produtoId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ProdutoModel atualizar(@PathVariable Long restauranteId, @PathVariable Long produtoId,
                                   @RequestBody @Valid ProdutoInput produtoInput) {
         Produto produtoAtual = cadastroProduto.buscarOuFalhar(restauranteId, produtoId);
