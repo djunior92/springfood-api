@@ -1,0 +1,27 @@
+version: "3.9"
+
+networks:
+  springfood-network:
+    driver: bridge
+
+services:
+  springfood-mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "3307:3306"
+    networks:
+      - springfood-network
+
+  springfood-api:
+    image: springfood-api
+    command: ["/wait-for-it.sh", "springfood-mysql:3307", "-t", "30", "--", "java", "-jar", "api.jar"]
+    environment:
+      DB_HOST: springfood-mysql
+    ports:
+      - "8080:8080"
+    networks:
+      - springfood-network
+    depends_on:
+      - springfood-mysql
