@@ -14,11 +14,18 @@ services:
     networks:
       - springfood-network
 
+  springfood-redis:
+    image: redis:6.2.1-alpine
+    networks:
+      - springfood-network
+
   springfood-api:
     image: springfood-api
     command: ["/wait-for-it.sh", "springfood-mysql:3307", "-t", "30", "--", "java", "-jar", "api.jar"]
     environment:
       DB_HOST: springfood-mysql
+      SPRING_SESSION_STORE_TYPE: redis
+      SPRING_REDIS_HOST: springfood-redis
     networks:
       - springfood-network
     depends_on:
