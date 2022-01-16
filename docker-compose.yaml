@@ -21,11 +21,12 @@ services:
 
   springfood-api:
     image: springfood-api
-    command: ["/wait-for-it.sh", "springfood-mysql:3307", "-t", "30", "--", "java", "-jar", "api.jar"]
+    command: ["/wait-for-it.sh", "springfood-mysql:3306", "-t", "30", "--", "java", "-jar", "api.jar"]
     environment:
       DB_HOST: springfood-mysql
       SPRING_SESSION_STORE_TYPE: redis
       SPRING_REDIS_HOST: springfood-redis
+      SPRING_PROFILES_ACTIVE: development
     networks:
       - springfood-network
     depends_on:
