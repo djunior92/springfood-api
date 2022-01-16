@@ -5,17 +5,14 @@ import com.course.springfood.domain.repository.CozinhaRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 
-import static com.course.springfood.util.ResourceUtils.getContentFromResource;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -63,21 +60,6 @@ public class CadastroCozinhaIT extends RestAssuredOAuth2Test {
             .get()
         .then()
             .body("_embedded.cozinhas", hasSize((int) cozinhaRepository.count()));
-    }
-
-    @Disabled
-    @Test
-    @Sql(scripts = "classpath:db/testdata/afterMigrate.sql")
-    public void deveRetornarStatus201_QuandoCadastrarCozinha() {
-        given()
-            .header("Authorization", "Bearer " + getToken())
-            .body(getContentFromResource("/json/correto/cozinha-chinesa.json"))
-            .contentType(MediaType.APPLICATION_JSON_VALUE)
-            .accept(ContentType.JSON)
-        .when()
-            .post()
-        .then()
-            .statusCode(HttpStatus.CREATED.value());
     }
 
     @Test

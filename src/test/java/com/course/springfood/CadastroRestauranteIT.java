@@ -7,7 +7,6 @@ import com.course.springfood.domain.repository.RestauranteRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -62,21 +61,6 @@ public class CadastroRestauranteIT extends RestAssuredOAuth2Test {
             .statusCode(HttpStatus.OK.value());
     }
 
-    @Disabled
-    @Test
-    @Sql(scripts = "classpath:db/testdata/afterMigrate.sql")
-    public void deveRetornarStatus201_QuandoCadastrarRestaurante() {
-        given()
-            .header("Authorization", "Bearer " + getToken())
-            .body(getContentFromResource("/json/correto/restaurante-khea-thai.json"))
-            .contentType(ContentType.JSON)
-            .accept(ContentType.JSON)
-        .when()
-            .post()
-        .then()
-            .statusCode(HttpStatus.CREATED.value());
-    }
-
     @Test
     @Sql(scripts = "classpath:db/testdata/afterMigrate.sql")
     public void deveRetornarStatus400_QuandoCadastrarRestauranteSemTaxaFrete() {
@@ -105,22 +89,6 @@ public class CadastroRestauranteIT extends RestAssuredOAuth2Test {
         .then()
             .statusCode(HttpStatus.BAD_REQUEST.value())
             .body("title", equalTo(DADOS_INVALIDOS_PROBLEM_TITLE));
-    }
-
-    @Disabled
-    @Test
-    @Sql(scripts = "classpath:db/testdata/afterMigrate.sql")
-    public void deveRetornarStatus400_QuandoCadastrarRestauranteComCozinhaInexistente() {
-        given()
-            .header("Authorization", "Bearer " + getToken())
-            .body(getContentFromResource("/json/incorreto/restaurante-khea-thai-com-cozinha-inexistente.json"))
-            .contentType(ContentType.JSON)
-            .accept(ContentType.JSON)
-        .when()
-            .post()
-        .then()
-            .statusCode(HttpStatus.BAD_REQUEST.value())
-            .body("title", equalTo(VIOLACAO_DE_REGRA_DE_NEGOCIO_PROBLEM_TYPE));
     }
 
     @Test
