@@ -1,0 +1,3421 @@
+{
+	"info": {
+		"_postman_id": "56b27f2b-f6b2-482c-92af-db1c3ea828a7",
+		"name": "springfood",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authorization Server",
+			"item": [
+				{
+					"name": "Password Flow - Solicitar token",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "web123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "springfood-web",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "joao@springfood.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/oauth/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Exibir Chave Pública",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/.well-known/jwks.json",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								".well-known",
+								"jwks.json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Client Credentials - Solicitar token",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "faturamento123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "faturamento",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/oauth/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(NAVEGADOR) Authorization Code - Solicitar CODE",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/oauth/authorize?response_type=code&client_id=foodanalytics&state=abc&redirect_uri=http://localhost:8082",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"oauth",
+								"authorize"
+							],
+							"query": [
+								{
+									"key": "response_type",
+									"value": "code"
+								},
+								{
+									"key": "client_id",
+									"value": "foodanalytics"
+								},
+								{
+									"key": "state",
+									"value": "abc"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "http://localhost:8082"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authorization Code - Solicitar token",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "foodanalytics",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "RYgVEP",
+									"type": "text"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "http://localhost:8082",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/oauth/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(NAVEGADOR) Authorization Code PKCE plain - Solicitar CODE",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/oauth/authorize?response_type=code&client_id=foodanalytics&redirect_uri=http://localhost:8082&code_challenge=teste123&code_challenge_method=plain",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"oauth",
+								"authorize"
+							],
+							"query": [
+								{
+									"key": "response_type",
+									"value": "code"
+								},
+								{
+									"key": "client_id",
+									"value": "foodanalytics"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "http://localhost:8082"
+								},
+								{
+									"key": "code_challenge",
+									"value": "teste123"
+								},
+								{
+									"key": "code_challenge_method",
+									"value": "plain"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authorization Code PKCE - Solicitar token",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "F6uw8J",
+									"type": "text"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "http://localhost:8082",
+									"type": "text"
+								},
+								{
+									"key": "code_verifier",
+									"value": "teste123",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "foodanalytics",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/oauth/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Estados",
+			"item": [
+				{
+					"name": "Estados - Listar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/estados",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"estados"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Estados - Buscar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/estados/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"estados",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Estados - Adicionar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Santa Catarina\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/estados",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"estados"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Estados - Atualizar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Rio de Janeiro\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/estados/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"estados",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Estados - Remover",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/estados/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"estados",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cidades",
+			"item": [
+				{
+					"name": "Cidades - Listar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/cidades",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"cidades"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cidades - Buscar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/cidades/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"cidades",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cidades - Adicionar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Catanduva\",\n    \"estado\": {\n        \"id\": 2\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/cidades",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"cidades"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cidades - Atualizar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"aaaaaaaaa\",\n    \"estado\": {\n        \"id\": 3\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/cidades/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"cidades",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cidades - Remover",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"aaaaaaaaa\",\n    \"estado\": {\n        \"id\": 3\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/cidades/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"cidades",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cidades - Listar - v2 URI",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v2/cidades",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v2",
+								"cidades"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cozinhas",
+			"item": [
+				{
+					"name": "Cozinhas - Listar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/cozinhas?size=2&page=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"cozinhas"
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "2"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cozinhas - Buscar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/v1/cozinhas/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"cozinhas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cozinhas - Adicionar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Brasileira\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/cozinhas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"cozinhas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cozinhas - Atualizar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Brasileiras\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/cozinhas/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"cozinhas",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cozinhas - Remover",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/cozinhas/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"cozinhas",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Restaurantes",
+			"item": [
+				{
+					"name": "Restaurantes - Listar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/restaurantes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"restaurantes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Buscar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/restaurantes/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"restaurantes",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Adicionar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Comida Mineira\",\n    \"taxaFrete\": 12,\n    \"cozinha\": {\n        \"id\": 1\n    },\n    \"endereco\": {\n        \"cep\": \"15800-000\",\n        \"logradouro\": \"Rua Brasil\",\n        \"numero\": \"1000\",\n        \"complemento\": null,\n        \"bairro\": \"Centro\",\n        \"cidade\": {\n            \"id\": 2\n        }\n    }\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/restaurantes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"restaurantes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Atualizar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Boa Fome\",\n    \"taxaFrete\": 5,\n    \"cozinha\": {\n        \"id\": 2\n    },\n    \"endereco\": {\n        \"cep\": \"38400-999\",\n        \"logradouro\": \"Rua Brasil\",\n        \"numero\": \"1000\",\n        \"complemento\": null,\n        \"bairro\": \"Centro\",\n        \"cidade\": {\n            \"id\": 1\n        }\n    }\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/restaurantes/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"restaurantes",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Atualizar parcial",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Boa Fome 2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/restaurantes/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"restaurantes",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Ativar ou inativar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/restaurantes/1/ativo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"restaurantes",
+								"1",
+								"ativo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Listar formas de pagamento",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/restaurantes/1/formas-pagamento",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"restaurantes",
+								"1",
+								"formas-pagamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Associação forma de pagamento",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/restaurantes/1/formas-pagamento/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"restaurantes",
+								"1",
+								"formas-pagamento",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Abrir",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/restaurantes/1/abertura",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"restaurantes",
+								"1",
+								"abertura"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Fechar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/restaurantes/1/fechamento",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"restaurantes",
+								"1",
+								"fechamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Listar responsáveis",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/restaurantes/1/responsaveis",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"restaurantes",
+								"1",
+								"responsaveis"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Desassociar responsável",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/restaurantes/1/responsaveis/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"restaurantes",
+								"1",
+								"responsaveis",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Associar responsável",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Marcos Garcia\",\n    \"email\": \"marcos@springfood.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/restaurantes/1/responsaveis/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"restaurantes",
+								"1",
+								"responsaveis",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Inativar em massa",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[ 1, 3, 4 ]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/restaurantes/ativacoes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"restaurantes",
+								"ativacoes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Ativar em massa",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[ 3, 4 ]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/restaurantes/ativacoes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"restaurantes",
+								"ativacoes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Produtos",
+			"item": [
+				{
+					"name": "Produtos - Listar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/restaurantes/1/produtos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"restaurantes",
+								"1",
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Produtos - Buscar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/restaurantes/1/produtos/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"restaurantes",
+								"1",
+								"produtos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Produtos - Adicionar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Batata\",\n    \"descricao\": \"Porção de Batatas\",\n    \"preco\": 50.00,\n    \"ativo\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/restaurantes/1/produtos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"restaurantes",
+								"1",
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Produtos - Atualizar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Batatas\",\n    \"descricao\": \"Porção de Batatas\",\n    \"preco\": 50.00,\n    \"ativo\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/restaurantes/1/produtos/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"restaurantes",
+								"1",
+								"produtos",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Formas de Pagamento",
+			"item": [
+				{
+					"name": "Formas de Pgto - Listar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/formas-pagamento",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"formas-pagamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Formas de Pgto - Adicionar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"descricao\": \"Boleto\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/formas-pagamento",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"formas-pagamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Formas de Pgto - Atualizar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"descricao\": \"Boleto\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/formas-pagamento/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"formas-pagamento",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Formas de Pgto - Remover",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/formas-pagamento/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"formas-pagamento",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Grupos de Usuários",
+			"item": [
+				{
+					"name": "Grupos - Listar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/grupos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"grupos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Grupos - Adicionar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Executor\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/grupos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"grupos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Grupos - Atualizar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Fiscal\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/grupos/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"grupos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Grupos - Remover",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/grupos/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"grupos",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Grupos - Buscar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/grupos/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"grupos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Grupos - Listar permissões",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/grupos/1/permissoes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"grupos",
+								"1",
+								"permissoes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Grupos - Associar permissões",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"CONSULTAR_COZINHAS\",\n    \"descricao\": \"Permite consultar cozinhas\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/grupos/1/permissoes/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"grupos",
+								"1",
+								"permissoes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Grupos - Desassociar permissão",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/grupos/1/permissoes/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"grupos",
+								"1",
+								"permissoes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuários",
+			"item": [
+				{
+					"name": "Usuários - Listar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuários - Adicionar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Junior\",\n    \"email\": \"juninho@springfood.com\",\n    \"senha\": \"321\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuários - Atualizar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Junior2\",\n    \"email\": \"juninho2@springfood.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/usuarios/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"usuarios",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuários - Alterar senha",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"senhaAtual\": \"123\",\n    \"novaSenha\": \"abc\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/usuarios/1/senha",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"usuarios",
+								"1",
+								"senha"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuários - Buscar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/usuarios/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"usuarios",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuários - Listar grupos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/usuarios/1/grupos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"usuarios",
+								"1",
+								"grupos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuários - Associar grupo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Gerente\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/usuarios/1/grupos/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"usuarios",
+								"1",
+								"grupos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuários - Desassociar grupo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/usuarios/1/grupos/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"usuarios",
+								"1",
+								"grupos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pedidos",
+			"item": [
+				{
+					"name": "Pedidos - Listar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/pedidos?size=20&page=0&sort=codigo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"pedidos"
+							],
+							"query": [
+								{
+									"key": "clienteId",
+									"value": "6",
+									"disabled": true
+								},
+								{
+									"key": "restauranteId",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "dataCriacaoInicio",
+									"value": "2020-12-01T00:00:00Z",
+									"disabled": true
+								},
+								{
+									"key": "dataCriacaoFim",
+									"value": "2020-12-31T00:00:00Z",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "20"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "sort",
+									"value": "codigo"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pedidos - Buscar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/pedidos/47387b24-a26d-46e6-b56e-92a098cbd66f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"pedidos",
+								"47387b24-a26d-46e6-b56e-92a098cbd66f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pedidos - Adicionar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"restaurante\": {\n        \"id\": 1\n    },\n    \"formaPagamento\": {\n        \"id\": 1\n    },\n    \"enderecoEntrega\": {\n        \"cep\": \"15800-000\",\n        \"logradouro\": \"Rua Florianópolis\",\n        \"numero\": 999,\n        \"complemento\": \"Apto 100\",\n        \"bairro\": \"Centro\",\n        \"cidade\": {\n            \"id\": 1\n        }\n    }, \n    \"itens\": [\n        {\n            \"produtoId\": 1,\n            \"quantidade\": 3,\n            \"observacao\": \"Sem pimenta\"\n        },\n        {\n            \"produtoId\": 2,\n            \"quantidade\": 1\n        }\n    ]\n}\n    ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/pedidos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"pedidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pedidos - Confirmar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/pedidos/47387b24-a26d-46e6-b56e-92a098cbd66f/confirmacao",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"pedidos",
+								"47387b24-a26d-46e6-b56e-92a098cbd66f",
+								"confirmacao"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pedidos - Cancelar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/pedidos/47387b24-a26d-46e6-b56e-92a098cbd66f/cancelamento",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"pedidos",
+								"47387b24-a26d-46e6-b56e-92a098cbd66f",
+								"cancelamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pedidos - Entregar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/pedidos/47387b24-a26d-46e6-b56e-92a098cbd66f/entrega",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"pedidos",
+								"47387b24-a26d-46e6-b56e-92a098cbd66f",
+								"entrega"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Fotos de Produtos",
+			"item": [
+				{
+					"name": "Fotos de Produtos - Buscar",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "image/gif,image/jpeg,image/png",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/v1/restaurantes/1/produtos/1/foto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"restaurantes",
+								"1",
+								"produtos",
+								"1",
+								"foto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fotos de Produtos - Atualizar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/v1/restaurantes/1/produtos/1/foto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"restaurantes",
+								"1",
+								"produtos",
+								"1",
+								"foto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fotos de Produtos - Remover",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/v1/restaurantes/1/produtos/1/foto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"restaurantes",
+								"1",
+								"produtos",
+								"1",
+								"foto"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Estatísticas",
+			"item": [
+				{
+					"name": "Vendas diárias - JSON",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/pdf",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/estatisticas/vendas-diarias?dataCriacaoInicio=2021-01-01T00:00:00Z&dataCriacaoFim=2021-11-21T00:00:00Z",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"estatisticas",
+								"vendas-diarias"
+							],
+							"query": [
+								{
+									"key": "dataCriacaoInicio",
+									"value": "2021-01-01T00:00:00Z"
+								},
+								{
+									"key": "dataCriacaoFim",
+									"value": "2021-11-21T00:00:00Z"
+								},
+								{
+									"key": "timeOffset",
+									"value": "-03:00",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Vendas diárias - PDF",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/pdf",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/estatisticas/vendas-diarias?dataCriacaoInicio=2021-01-01T00:00:00Z&dataCriacaoFim=2021-11-21T00:00:00Z",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"estatisticas",
+								"vendas-diarias"
+							],
+							"query": [
+								{
+									"key": "dataCriacaoInicio",
+									"value": "2021-01-01T00:00:00Z"
+								},
+								{
+									"key": "dataCriacaoFim",
+									"value": "2021-11-21T00:00:00Z"
+								},
+								{
+									"key": "timeOffset",
+									"value": "-03:00",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Estatísticas - Listar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/estatisticas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"estatisticas"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Permissões",
+			"item": [
+				{
+					"name": "Permissões - Listar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/v1/permissoes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"v1",
+								"permissoes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ponto de entrada",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvQHNwcmluZ2Zvb2QuY29tIiwic2NvcGUiOlsiUkVBRCIsIldSSVRFIl0sImV4cCI6MTY0MjM5ODk2NiwiYXV0aG9yaXRpZXMiOlsiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DT1pJTkhBUyIsIkNPTlNVTFRBUl9VU1VBUklPU19HUlVQT1NfUEVSTUlTU09FUyIsIkVESVRBUl9DSURBREVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJFRElUQVJfVVNVQVJJT1NfR1JVUE9TX1BFUk1JU1NPRVMiLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6ImE2ZDdlNjNhLWY5MzAtNGQyNy1hNjRjLTIwMGYxNDI1MjE5OCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6InNwcmluZ2Zvb2Qtd2ViIn0.NsX11ZeiodCououQrE9S4lIpudgxXmY9Wsat2ICMJTlKN4d1xaP-w_AhuYLPnUcut8fwoD-lX94CFLrrZukTxJ58kR1GNJXGWbw1GfsNyeJh7GElXc26bFq7UwBFfpK-iPpCJtL898qZ3-AOGLUDGuUQAnvaedVzBycta983maEtEgCAMk3B3NzjSBx7tuwtpZ0s6cjamfGcGVtzqXyQXSWeKgUAOyAsVGJ25QmFKa9C5aA8310EB1AEs7PrMDVC6m0lFm964g7tzWgqiD4_E2Lu6uAy_hIwY8978HBA1lnMIuqCOlxWr-NnUdDGw8a1O_oMi-MBkSNDOvSF9rhRhA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/v1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"v1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
